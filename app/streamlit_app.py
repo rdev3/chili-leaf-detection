@@ -29,13 +29,14 @@ AMBANG_KEYAKINAN = 0.70
 INFO = {
     "healthy": {
         "judul": "Daun Sehat",
-        "saran": "Tidak ditemukan gejala bacterial spot. Tetap jaga kesehatan tanaman cabai dengan pemupukan dan penyiraman yang baik.",
+        "saran": "Tidak ditemukan gejala bacterial spot. Lanjutkan perawatan rutin.",
     },
     "bacterial_spot": {
         "judul": "Bacterial Spot",
         "saran": (
             "Ditemukan gejala bercak daun bakteri. Pisahkan tanaman yang "
-            "terinfeksi agar tidak menular."
+            "terinfeksi agar tidak menular, lalu konsultasikan dengan "
+            "penyuluh pertanian setempat."
         ),
     },
 }
@@ -67,7 +68,7 @@ def predict_image(model, image, device):
 def main():
     import streamlit as st
 
-    st.set_page_config(page_title="Deteksi Bacterial Spot Daun Cabai - Rangga Deva", layout="centered")
+    st.set_page_config(page_title="Deteksi Bacterial Spot Daun Cabai", layout="centered")
 
     @st.cache_resource
     def _model():
@@ -76,8 +77,8 @@ def main():
 
     st.title("Deteksi Penyakit Bercak Daun Bakteri")
     st.write(
-        "Silahkan upload foto daun cabai. Model MobileNetV3-Small + Coordinate Attention "
-        "akan memprediksi apakah daun sehat atau tidak."
+        "Ambil atau unggah foto daun cabai. Model MobileNetV3-Small + Coordinate "
+        "Attention akan memprediksi apakah daun sehat atau terinfeksi bacterial spot."
     )
 
     try:
@@ -86,18 +87,29 @@ def main():
         st.error(str(e))
         return
 
-    berkas = st.file_uploader("Pilih foto daun", type=["jpg", "jpeg", "png"])
-    if berkas is None:
+    sumber = st.radio("Sumber gambar", ["Upload file", "Kamera"], horizontal=True)
+
+    gambar = None
+    if sumber == "Upload file":
+        berkas = st.file_uploader("Pilih foto daun", type=["jpg", "jpeg", "png"])
+        if berkas is not None:
+            gambar = Image.open(berkas)
+    else:
+        foto = st.camera_input("Ambil foto daun")
+        if foto is not None:
+            gambar = Image.open(foto)
+
+    if gambar is None:
         return
-    gambar = Image.open(berkas)
-    st.image(gambar, caption="Foto yang diupload", use_container_width=True)
+    st.image(gambar, caption="Foto yang dipakai", use_container_width=True)
 
     if st.button("Deteksi"):
         pred, probs = predict_image(model, gambar, device)
         if probs[pred] < AMBANG_KEYAKINAN:
             st.warning(
-                "Keyakinan model rendah, hasil di bawah belum bisa dijadikan acuan. "
-                "Coba foto lagi dengan pencahayaan yang cukup."
+                "Keyakinan model rendah, hasil di bawah belum bisa dipegang. "
+                "Coba foto satu helai daun dengan background polos dan "
+                "pencahayaan yang cukup."
             )
         info = INFO[pred]
         st.subheader(f"Hasil: {info['judul']}")
