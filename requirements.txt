@@ -1,13 +1,12 @@
-# Baris index pertama khusus PyTorch CPU: dipakai saat deploy di
-# Streamlit Community Cloud yang tidak punya GPU.
+# PyTorch versi CPU untuk Streamlit Community Cloud yang tidak punya GPU.
+# Ini pola standar yang dipakai banyak aplikasi Streamlit: --extra-index-url
+# menunjuk ke wheel CPU PyTorch sehingga unduhannya ~200 MB, bukan ~2,5 GB
+# versi CUDA yang bisa menggagalkan build di free tier.
 # Di laptop, torch/torchvision versi CUDA yang sudah terinstal TIDAK akan
 # diganti karena pip melewati paket yang syaratnya sudah terpenuhi.
-# Urutan instal lokal tetap: torch CUDA dulu (lihat README langkah 2),
-# baru pip install -r requirements.txt. Jangan dibalik.
---index-url https://download.pytorch.org/whl/cpu
+--extra-index-url https://download.pytorch.org/whl/cpu
 torch
 torchvision
---index-url https://pypi.org/simple
 streamlit
 pillow
 numpy
