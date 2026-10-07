@@ -1,0 +1,39 @@
+# Konfigurasi eksperimen -- DIKUNCI 7 Okt 2026.
+# Setiap nilai di sini konsisten dengan yang dijanjikan di BAB 3 laporan KP.
+# Ubah hanya jika BAB 3 ikut direvisi (penguji membandingkan keduanya).
+
+project: chili-leaf-detection
+backbone: mobilenetv3_small        # pretrained ImageNet, ~2.5 jt parameter
+
+# Empat varian yang dibandingkan di BAB 4.
+# Modul attention dipasang SETELAH backbone, SEBELUM classifier head
+# (posisi sama untuk ketiganya agar perbandingan adil --
+#  sesuai penjelasan di BAB 3: V3 sudah mengandung SE di dalam bottleneck-nya).
+variants: [baseline, se, cbam, ca]
+
+data:
+  image_size: 224                  # input standar MobileNetV3
+  split: {train: 0.70, val: 0.15, test: 0.15}
+  split_seed: 42                   # TETAP untuk semua 12 training (beda dari training seeds!)
+  stratified: true                 # proporsi kelas dijaga di tiap split
+  augment_train_only: true         # augmentasi HANYA di data train (anti data leakage)
+  num_workers: 0                   # 0 = DataLoader single-process, aman di Windows
+
+training:
+  seeds: [42, 123, 2026]           # 3 seed x 4 varian = 12 training; lapor mean +- std
+  batch_size: 32
+  optimizer: adam
+  phase1:                          # latih classifier head saja, backbone dibekukan
+    epochs: 30
+    lr: 0.001
+    freeze_backbone: true
+  phase2:                          # fine-tuning seluruh jaringan
+    epochs: 50
+    lr: 0.0001
+    freeze_backbone: false
+  early_stopping:
+    patience: 10
+    monitor: val_f1
+
+# Sesuai Rumus 3.7-3.10 di BAB 3, plus confusion matrix.
+metrics: [accuracy, precision, recall, f1]

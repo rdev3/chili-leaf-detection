@@ -1,0 +1,10 @@
+# torch & torchvision SENGAJA tidak ada di sini:
+# instal versi CUDA dulu sesuai README (langkah 2),
+# supaya tidak tertimpa versi CPU oleh pip.
+numpy
+pillow
+pyyaml
+scikit-learn
+matplotlib
+tqdm
+streamlit
