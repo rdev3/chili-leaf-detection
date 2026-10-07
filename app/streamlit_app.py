@@ -29,14 +29,13 @@ AMBANG_KEYAKINAN = 0.70
 INFO = {
     "healthy": {
         "judul": "Daun Sehat",
-        "saran": "Tidak ditemukan gejala bacterial spot. Lanjutkan perawatan rutin.",
+        "saran": "Tidak ditemukan gejala bacterial spot. Tetap jaga kesehatan tanaman cabai dengan pemupukan dan penyiraman yang baik.",
     },
     "bacterial_spot": {
         "judul": "Bacterial Spot",
         "saran": (
             "Ditemukan gejala bercak daun bakteri. Pisahkan tanaman yang "
-            "terinfeksi agar tidak menular, lalu konsultasikan dengan "
-            "penyuluh pertanian setempat."
+            "terinfeksi agar tidak menular."
         ),
     },
 }
@@ -68,7 +67,7 @@ def predict_image(model, image, device):
 def main():
     import streamlit as st
 
-    st.set_page_config(page_title="Deteksi Bacterial Spot Daun Cabai", layout="centered")
+    st.set_page_config(page_title="Deteksi Bacterial Spot Daun Cabai - Rangga Deva", layout="centered")
 
     @st.cache_resource
     def _model():
@@ -77,8 +76,8 @@ def main():
 
     st.title("Deteksi Penyakit Bercak Daun Bakteri")
     st.write(
-        "Unggah foto daun cabai. Model MobileNetV3-Small + Coordinate Attention "
-        "akan memprediksi apakah daun sehat atau terinfeksi bacterial spot."
+        "Silahkan upload foto daun cabai. Model MobileNetV3-Small + Coordinate Attention "
+        "akan memprediksi apakah daun sehat atau tidak."
     )
 
     try:
@@ -91,15 +90,14 @@ def main():
     if berkas is None:
         return
     gambar = Image.open(berkas)
-    st.image(gambar, caption="Foto yang diunggah", use_container_width=True)
+    st.image(gambar, caption="Foto yang diupload", use_container_width=True)
 
     if st.button("Deteksi"):
         pred, probs = predict_image(model, gambar, device)
         if probs[pred] < AMBANG_KEYAKINAN:
             st.warning(
-                "Keyakinan model rendah, hasil di bawah belum bisa dipegang. "
-                "Coba foto satu helai daun dengan background polos dan "
-                "pencahayaan yang cukup."
+                "Keyakinan model rendah, hasil di bawah belum bisa dijadikan acuan. "
+                "Coba foto lagi dengan pencahayaan yang cukup."
             )
         info = INFO[pred]
         st.subheader(f"Hasil: {info['judul']}")
