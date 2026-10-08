@@ -107,8 +107,8 @@ def main():
         pred, probs = predict_image(model, gambar, device)
         if probs[pred] < AMBANG_KEYAKINAN:
             st.warning(
-                "Keyakinan model rendah, hasil di bawah belum bisa dipegang. "
-                "Coba foto satu helai daun dengan background polos dan "
+                "Keyakinan model rendah, hasil di bawah belum bisa dijadikan acuan. "
+                "Coba foto dengan background polos dan "
                 "pencahayaan yang cukup."
             )
         info = INFO[pred]
