@@ -1,20 +1,3 @@
-#!/usr/bin/env python3
-"""Konversi checkpoint terbaik ke TFLite + benchmark latensi.
-
-Membaca outputs/summary/best_model.json, mengkonversi checkpoint terbaik
-varian pilihan ke TFLite, lalu mengukur latensi inferensi CPU dan ukuran
-file sebagai bukti kelayakan mobile untuk BAB 4.
-
-Contoh pakai dari root proyek:
-    python scripts/export_tflite.py
-    python scripts/export_tflite.py --variant se
-
-Kebutuhan tambahan khusus skrip ini:
-    pip install ai-edge-torch
-Kalau belum terinstal, konversi TFLite dilewati dan hanya benchmark
-PyTorch yang disimpan.
-"""
-
 import argparse
 import json
 import sys

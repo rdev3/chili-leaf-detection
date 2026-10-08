@@ -1,16 +1,3 @@
-#!/usr/bin/env python3
-"""Training 4 varian model x 3 seed dengan transfer learning dua fase.
-
-Fase 1: backbone dibekukan, hanya classifier head yang dilatih.
-Fase 2: seluruh jaringan di-fine-tuning dengan learning rate kecil.
-Tiap fase memakai early stopping berdasarkan F1 data validasi.
-
-Contoh pakai dari root proyek:
-    python scripts/train.py                                # semua, 12x training
-    python scripts/train.py --variants baseline --seeds 42 # smoke test cepat
-    python scripts/train.py --overwrite                     # ulangi run yang selesai
-"""
-
 import argparse
 import json
 import random

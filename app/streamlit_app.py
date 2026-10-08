@@ -1,10 +1,8 @@
-"""Aplikasi demo deteksi penyakit bercak daun bakteri pada daun cabai.
+"""
+Aplikasi demo deteksi penyakit bercak daun bakteri pada daun cabai.
 
-Memakai model MobileNetV3-Small + Coordinate Attention terbaik
-dari hasil training.
+Memakai model MobileNetV3-Small + Coordinate Attention
 
-Jalankan dari root proyek:
-    streamlit run app/streamlit_app.py
 """
 
 import sys
