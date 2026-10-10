@@ -1,22 +1,22 @@
 """Ukur jumlah parameter dan waktu inferensi per citra di CPU untuk tiap varian.
-
-Jalankan dari folder proyek:  python scripts/benchmark_latency.py
-Angkanya dipakai untuk Tabel 4.5 di BAB 4.
 """
 
 import argparse
 import csv
 import json
+import sys
 import time
 from pathlib import Path
 
 import torch
 from torch.utils.data import DataLoader
 
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
 from src.data import LeafDataset, eval_transform
 from src.models import build_model
 
-ROOT = Path(__file__).resolve().parent.parent
 VARIANTS = ["baseline", "se", "cbam", "ca"]
 
 
