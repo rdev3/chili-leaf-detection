@@ -21,11 +21,6 @@ def _attention_module(variant):
 
 
 def build_model(variant, num_classes=2, pretrained=True):
-    """Bangun satu varian model. Kembalikan model dan backbone-nya.
-
-    Backbone dipakai terpisah supaya fase 1 training bisa dibekukan
-    tanpa mematikan modul attention dan classifier.
-    """
     weights = MobileNet_V3_Small_Weights.IMAGENET1K_V1 if pretrained else None
     backbone = mobilenet_v3_small(weights=weights).features
     head = nn.Sequential(
