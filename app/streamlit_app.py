@@ -119,10 +119,8 @@ h1, h2, h3 {font-family: "Figtree", "Segoe UI", sans-serif; font-weight: 700; le
     font-size: 1.9rem; color: #DCE9C8; margin: 0 0 1rem 0;
 }
 .hero-sub {color: #A9B8A4; font-size: 1rem; line-height: 1.6; max-width: 30rem; margin: 0;}
-.kartu-gradien {
-    background: linear-gradient(135deg, #1E5B2A 0%, #43A047 55%, #9CCC65 100%);
-    border-radius: 16px; padding: 1.1rem 0.8rem; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
-}
+.hero-art {display: flex; justify-content: center;}
+.hero-art svg {width: 100%; max-width: 260px; height: auto;}
 
 /* ---------- Angka ringkas, fitur, langkah ---------- */
 .stat-grid {display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.2rem;}
@@ -174,10 +172,9 @@ h1, h2, h3 {font-family: "Figtree", "Segoe UI", sans-serif; font-weight: 700; le
 .info-berkas {display: flex; justify-content: space-between; gap: 0.6rem; font-size: 0.82rem; color: var(--muted); margin: 0.2rem 0 0.9rem 0;}
 
 .kosong {
-    border: 1.5px dashed #C9D4B2; border-radius: 18px; padding: 1.7rem 1.2rem;
+    border: 1.5px dashed #C9D4B2; border-radius: 18px; padding: 1.5rem 1.2rem;
     text-align: center; color: var(--muted); font-size: 0.95rem; line-height: 1.55;
 }
-.kosong svg {width: 44px; height: 44px; margin-bottom: 0.6rem; opacity: 0.85;}
 .kosong b {display: block; color: var(--ink); font-size: 1.02rem; margin-bottom: 0.2rem;}
 
 .hasil {border-radius: 18px; padding: 1.3rem 1.4rem;}
@@ -226,39 +223,31 @@ LOGO_SVG = """
 </svg>
 """
 
-# Cluster smiley rona daun, motif utama DESIGN.md, digambar sebagai
-# lingkaran datar dengan wajah garis sederhana.
-SMILEY_SVG = """
-<svg viewBox="0 0 260 190" width="100%" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="44" cy="40" r="26" fill="#F0D93B"/>
-  <circle cx="178" cy="66" r="40" fill="#9CCC65"/>
-  <circle cx="200" cy="132" r="34" fill="#B7C93E"/>
-  <circle cx="130" cy="148" r="30" fill="#66BB6A"/>
-  <circle cx="88" cy="92" r="52" fill="#43A047"/>
-  <g fill="#131A0E">
-    <circle cx="36" cy="36" r="3.4"/><circle cx="52" cy="36" r="3.4"/>
-    <circle cx="166" cy="60" r="4.4"/><circle cx="190" cy="60" r="4.4"/>
-    <circle cx="189" cy="127" r="3.8"/><circle cx="211" cy="127" r="3.8"/>
-    <circle cx="120" cy="144" r="3.4"/><circle cx="140" cy="144" r="3.4"/>
-    <circle cx="70" cy="84" r="5.6"/><circle cx="106" cy="84" r="5.6"/>
+# Ilustrasi daun dengan bingkai pemindai untuk hero, mengikuti
+# palet daun. Digambar pada kanvas persegi dan ditampilkan dengan
+# lebar maksimal supaya proporsinya tidak tertarik.
+DAUN_SVG = """
+<svg viewBox="0 0 320 320" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustrasi daun cabai dengan bingkai pemindai">
+  <circle cx="160" cy="160" r="140" fill="#FFFFFF" fill-opacity="0.05"/>
+  <path d="M160 36C246 76 280 172 160 288C40 172 74 76 160 36Z" fill="#43A047"/>
+  <path d="M160 36C246 76 280 172 160 288Z" fill="#2E7D32"/>
+  <g stroke="#1E5B2A" stroke-opacity="0.55" stroke-width="3" stroke-linecap="round" fill="none">
+    <path d="M160 50V286"/>
+    <path d="M160 100L118 78M160 100L202 78"/>
+    <path d="M160 146L100 118M160 146L220 118"/>
+    <path d="M160 192L108 160M160 192L212 160"/>
+    <path d="M160 236L128 206M160 236L192 206"/>
   </g>
-  <g fill="none" stroke="#131A0E" stroke-linecap="round">
-    <path d="M36,46 Q44,53 52,46" stroke-width="3"/>
-    <path d="M165,72 Q178,83 191,72" stroke-width="3.6"/>
-    <path d="M189,137 Q200,145 211,137" stroke-width="3.2"/>
-    <path d="M120,154 Q130,161 140,154" stroke-width="3"/>
-    <path d="M69,98 Q88,114 107,98" stroke-width="4.6"/>
+  <g fill="#7A3B14" fill-opacity="0.9">
+    <circle cx="124" cy="134" r="9"/><circle cx="206" cy="172" r="11"/>
+    <circle cx="140" cy="206" r="7"/><circle cx="188" cy="112" r="6"/>
+  </g>
+  <g stroke="#C1E35C" stroke-width="5" stroke-linecap="round" fill="none">
+    <path d="M52 92V58H86"/><path d="M268 92V58H234"/>
+    <path d="M52 228V262H86"/><path d="M268 228V262H234"/>
   </g>
 </svg>
 """
-
-IKON_KOSONG_SVG = """
-<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <path d="M32 8c14 6 20 20 0 46C12 28 18 14 32 8Z" fill="#E7F3DE" stroke="#2E7D32" stroke-width="2.5" stroke-linejoin="round"/>
-  <path d="M32 14v38" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round"/>
-</svg>
-"""
-
 LANGKAH_TUTORIAL = [
     "Siapkan foto satu helai daun cabai dengan background polos dan pencahayaan yang cukup.",
     "Pilih sumber gambar, unggah file foto atau ambil langsung dari kamera.",
@@ -589,7 +578,7 @@ def tampilkan_welcome(st):
                 st.session_state.mulai = True
                 st.rerun()
         with kanan:
-            st.markdown(f'<div class="kartu-gradien">{SMILEY_SVG}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="hero-art">{DAUN_SVG}</div>', unsafe_allow_html=True)
 
     st.markdown(
         '<div class="stat-grid">'
@@ -773,7 +762,7 @@ def main():
             )
             if not hasil_valid:
                 st.markdown(
-                    f'<div class="kosong">{IKON_KOSONG_SVG}<b>Belum ada hasil</b>'
+                    '<div class="kosong"><b>Belum ada hasil</b>'
                     "Hasil deteksi tampil di sini setelah foto dipilih "
                     "dan tombol Deteksi diklik.</div>",
                     unsafe_allow_html=True,

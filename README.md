@@ -137,6 +137,7 @@ Memakai checkpoint CA terbaik
 - v27: revisi desain dari Claude diterapkan dan dirapikan: arah botani hijau-krem (Fraunces + Figtree), topbar, stepper, panel bernomor, kartu hasil custom; proporsi panel Grad-CAM diperbaiki (foto asli dan peta berdampingan ukuran sama), hero dikencangkan, lencana sehat digelapkan demi kontras
 - v28: proporsi panel hasil diperbaiki dari screenshot user: bar probabilitas dipindah ke dalam kartu hasil dengan garis pemisah, persen sangat kecil digambar sebagai ruas minimum 1,5% agar terbaca sebagai data, track lebih tipis, kotak keadaan kosong dipadatkan
 - v29: UI di-rework ke bahasa Designjoy dengan palet daun: hero hitam berisi kartu gradien hijau dengan cluster smiley rona daun, subjudul serif italic, kartu fitur dotted, halaman kertas hijau pucat, CTA hijau daun teks hitam, sisi sakit rona karat; struktur dan perbaikan proporsi v28 dipertahankan
+- v30: masukan user dari screenshot: cluster smiley diganti lagi dengan ilustrasi daun berbingkai pemindai (proporsi dikunci lebar maksimal 260px), ikon daun di kotak "Belum ada hasil" dihapus
 
 ## Troubleshooting
 
