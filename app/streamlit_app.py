@@ -306,7 +306,7 @@ def tampilkan_welcome(st):
         tampilkan_tutorial(st)
 
     st.caption(
-        "Kerja Praktek ITB STIKOM Bali · Akurasi model pada data uji 99,73%"
+        "Made Ranggadeva Ratryananda Sandhi · Kerja Praktek ITB STIKOM Bali"
     )
 
 
