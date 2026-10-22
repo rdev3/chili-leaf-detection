@@ -91,7 +91,6 @@ def main():
     outdir = ROOT / args.outdir
     outdir.mkdir(parents=True, exist_ok=True)
 
-    # Kumpulkan metrik tiap run yang sudah selesai.
     runs = {}
     missing = []
     for variant in variants:
@@ -108,7 +107,6 @@ def main():
     for name in missing:
         print(f"  belum ada: {name}")
 
-    # Tabel perbandingan: mean +- std tiap varian.
     table = []
     for variant in variants:
         if variant not in runs:
@@ -152,7 +150,6 @@ def main():
             cells.append(f"{row[f'{m}_mean']:.4f} ± {row[f'{m}_std']:.4f}")
         print(" ".join(f"{c:17s}" for c in cells))
 
-    # Confusion matrix tiap run dari checkpoint fase 2, lalu rata-rata per varian.
     rows = test_rows(manifest)
     per_run_cm = []
     variant_cm = {}

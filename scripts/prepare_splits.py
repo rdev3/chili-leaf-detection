@@ -3,14 +3,12 @@
 prepare_splits.py -- Membuat split train/val/test dari dataset yang sudah
 lolos verify_dataset.py.
 
-Membaca laporan JSON verifikasi, mengumpulkan citra VALID per kelas
-(file corrupt dilewati otomatis), lalu split 70:15:15 secara stratified
-dengan split_seed TETAP dari configs/experiment.yaml.
+Membaca laporan JSON verifikasi, mengumpulkan citra valid per kelas
+(file corrupt dilewati otomatis), lalu split 70:15:15 secara stratified.
 
-Split memakai split_seed yang tetap dan berbeda dari training seeds.
-Split dibuat sekali lalu dipakai untuk semua 12 training supaya
-perbandingan antar varian adil. Yang boleh beda antar run hanya
-inisialisasi bobot dan urutan batch, bukan komposisi datanya.
+split_seed diambil tetap dari configs/experiment.yaml dan berbeda dari
+training seeds. Split dibuat sekali dan dipakai untuk semua 12 training
+supaya perbandingan antar varian adil.
 
 Cara pakai (dari root proyek):
     python scripts/prepare_splits.py --report outputs/dataset_report.json
@@ -31,7 +29,6 @@ from sklearn.model_selection import train_test_split
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff", ".webp"}
 
-# bacterial_spot = 1 karena itu kelas penyakit yang dideteksi
 LABEL_MAP = {"bacterial_spot": 1, "healthy": 0}
 
 
@@ -86,7 +83,6 @@ def main() -> int:
         print("FATAL: nol citra valid.")
         return 1
 
-    # Pisahkan test dulu, lalu val dari sisanya. Keduanya stratified.
     p_trainval, p_test, y_trainval, y_test = train_test_split(
         paths, labels, test_size=test_ratio, random_state=split_seed, stratify=labels
     )

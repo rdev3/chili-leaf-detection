@@ -52,29 +52,31 @@ BULAN = [
     "Juli", "Agustus", "September", "Oktober", "November", "Desember",
 ]
 
-# CSS seperlunya: sembunyikan menu dan footer bawaan Streamlit,
-# sisanya gaya untuk layar pembuka.
+# Tema warna diatur di .streamlit/config.toml mengikuti DESIGN.md.
+# CSS di sini hanya untuk chrome bawaan Streamlit dan layar pembuka.
 GAYA = """
 <style>
+@import url("https://cdn.jsdelivr.net/fontsource/fonts/geist@latest/index.css");
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
-.hero {text-align: center; padding: 1.5rem 1rem 0.5rem 1rem;}
-.hero .ikon {font-size: 3.2rem;}
-.hero h1 {font-size: 2rem; margin: 0.3rem 0;}
-.hero p {color: #57606a;}
+.stApp {font-family: "Geist", "Segoe UI", sans-serif;}
+h1 {letter-spacing: -0.035em;}
+.hero {text-align: center; padding: 2rem 1rem 0.5rem 1rem;}
+.hero h1 {font-size: 3rem; font-weight: 500; line-height: 1.05;}
+.hero p {color: #757575; max-width: 620px; margin: 0 auto;}
 .fitur {
-    background: #f0fdf4; border: 1px solid #86efac; border-radius: 14px;
-    padding: 1.1rem 0.8rem; text-align: center; height: 100%;
-    color: #14532d; box-shadow: 0 1px 3px rgba(20, 83, 45, 0.15);
+    background: #FFFFFF; border: 1px solid #EEEEEE; border-radius: 16px;
+    padding: 1.25rem 1.1rem; height: 100%; color: #000000;
 }
-.lencana {
-    width: 52px; height: 52px; margin: 0 auto 0.6rem auto;
-    background: #dcfce7; border: 1px solid #86efac; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.5rem;
+.judul-fitur {
+    font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em;
+    margin-bottom: 0.35rem;
 }
-.judul-fitur {font-weight: 700; margin-bottom: 0.3rem;}
-.fitur small {display: block; opacity: 0.85; line-height: 1.4;}
+.fitur small {display: block; color: #757575; font-size: 0.875rem; line-height: 1.45;}
+button[kind="primary"] {border-radius: 999px; border: none;}
+button[kind="primary"]:focus-visible {
+    box-shadow: 0 0 0 3px rgba(43, 78, 255, 0.4); outline: none;
+}
 </style>
 """
 
@@ -120,8 +122,8 @@ def predict_image(model, image, device):
 class GradCAM:
     """Grad-CAM pada satu layer target.
 
-    Simpan aktivasi layer saat forward dan gradiennya saat backward,
-    lalu gabungkan keduanya menjadi peta panas satu channel.
+    Aktivasi layer saat forward digabung dengan gradiennya saat
+    backward menjadi peta panas satu channel.
     """
 
     def __init__(self, model, target_layer):
@@ -266,7 +268,6 @@ def tampilkan_welcome(st):
     st.markdown(
         """
         <div class="hero">
-            <div class="ikon">🌶️</div>
             <h1>Deteksi Bercak Daun Bakteri pada Daun Cabai</h1>
             <p>Aplikasi ini memprediksi apakah sehelai daun cabai sehat atau
             terinfeksi bacterial spot dari sebuah foto, memakai model
@@ -276,17 +277,20 @@ def tampilkan_welcome(st):
         unsafe_allow_html=True,
     )
 
-    kol = st.columns(3)
+    # Kartu pertama lebih lebar karena deteksi adalah fungsi utama
+    # aplikasi; dua kartu lain hanya pendukungnya.
+    kol = st.columns([2, 1, 1])
     fitur = [
-        ("📸", "Deteksi dari Foto", "Unggah foto daun atau ambil dari kamera"),
-        ("🔥", "Peta Grad-CAM", "Lihat bagian daun yang menjadi dasar prediksi"),
-        ("📄", "Unduh Hasil PDF", "Simpan hasil deteksi sebagai dokumen laporan"),
+        ("Deteksi dari Foto",
+         "Unggah foto daun atau ambil dari kamera. Hasilnya label sehat "
+         "atau bacterial spot beserta tingkat keyakinan model."),
+        ("Peta Grad-CAM", "Lihat bagian daun yang menjadi dasar prediksi"),
+        ("Unduh Hasil PDF", "Simpan hasil deteksi sebagai dokumen laporan"),
     ]
-    for kolom, (ikon, judul, isi) in zip(kol, fitur):
+    for kolom, (judul, isi) in zip(kol, fitur):
         with kolom:
             st.markdown(
-                f'<div class="fitur"><div class="lencana">{ikon}</div>'
-                f'<div class="judul-fitur">{judul}</div>'
+                f'<div class="fitur"><div class="judul-fitur">{judul}</div>'
                 f"<small>{isi}</small></div>",
                 unsafe_allow_html=True,
             )
@@ -303,7 +307,7 @@ def tampilkan_welcome(st):
         tampilkan_tutorial(st)
 
     st.caption(
-        "Made Ranggadeva Ratryananda Sandhi · ITB STIKOM Bali"
+        "Kerja Praktek ITB STIKOM Bali · Akurasi model pada data uji 99,73%"
     )
 
 
@@ -340,6 +344,8 @@ def main():
 
     with st.expander("Cara Penggunaan"):
         tampilkan_tutorial(st)
+
+    st.divider()
 
     try:
         model, device = _model()

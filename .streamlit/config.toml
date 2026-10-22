@@ -1,0 +1,8 @@
+# Tema mengikuti DESIGN.md: kanvas putih, teks hitam, satu warna aksi biru.
+# Tema dikunci terang di sini supaya tampilan sama di semua perangkat.
+[theme]
+primaryColor = "#2B4EFF"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F9F9F9"
+textColor = "#000000"
+font = "sans serif"

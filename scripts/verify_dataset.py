@@ -28,7 +28,6 @@ from PIL import Image
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff", ".webp"}
 
-# (nama_kelas_internal, token_yang_wajib_ada_di_nama_folder)
 CLASS_RULES = [
     ("bacterial_spot", ("bacterial",)),
     ("healthy", ("healthy",)),
