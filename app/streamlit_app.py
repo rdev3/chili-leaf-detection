@@ -63,10 +63,18 @@ footer {visibility: hidden;}
 .hero h1 {font-size: 2rem; margin: 0.3rem 0;}
 .hero p {color: #57606a;}
 .fitur {
-    background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px;
-    padding: 0.8rem 0.6rem; text-align: center; height: 100%;
-    color: #14532d;
+    background: #f0fdf4; border: 1px solid #86efac; border-radius: 14px;
+    padding: 1.1rem 0.8rem; text-align: center; height: 100%;
+    color: #14532d; box-shadow: 0 1px 3px rgba(20, 83, 45, 0.15);
 }
+.lencana {
+    width: 52px; height: 52px; margin: 0 auto 0.6rem auto;
+    background: #dcfce7; border: 1px solid #86efac; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+}
+.judul-fitur {font-weight: 700; margin-bottom: 0.3rem;}
+.fitur small {display: block; opacity: 0.85; line-height: 1.4;}
 </style>
 """
 
@@ -270,14 +278,16 @@ def tampilkan_welcome(st):
 
     kol = st.columns(3)
     fitur = [
-        ("📷 Deteksi dari Foto", "Unggah foto daun atau ambil langsung dari kamera"),
-        ("🔥 Peta Grad-CAM", "Lihat bagian daun yang menjadi dasar prediksi model"),
-        ("📄 Unduh Hasil PDF", "Simpan hasil deteksi sebagai dokumen laporan"),
+        ("📸", "Deteksi dari Foto", "Unggah foto daun atau ambil dari kamera"),
+        ("🔥", "Peta Grad-CAM", "Lihat bagian daun yang menjadi dasar prediksi"),
+        ("📄", "Unduh Hasil PDF", "Simpan hasil deteksi sebagai dokumen laporan"),
     ]
-    for kolom, (judul, isi) in zip(kol, fitur):
+    for kolom, (ikon, judul, isi) in zip(kol, fitur):
         with kolom:
             st.markdown(
-                f'<div class="fitur"><b>{judul}</b><br><small>{isi}</small></div>',
+                f'<div class="fitur"><div class="lencana">{ikon}</div>'
+                f'<div class="judul-fitur">{judul}</div>'
+                f"<small>{isi}</small></div>",
                 unsafe_allow_html=True,
             )
 
