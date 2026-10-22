@@ -110,7 +110,9 @@ punya paket Windows):
 streamlit run app/streamlit_app.py
 ```
 Buka alamat yang muncul di terminal (biasanya http://localhost:8501).
-Unggah foto daun, tekan Deteksi. Memakai checkpoint CA terbaik
+Aplikasi dibuka dengan layar pembuka dan panduan penggunaan.
+Unggah foto daun, tekan Deteksi, lalu hasil dapat diunduh sebagai PDF.
+Memakai checkpoint CA terbaik
 (`outputs/runs/ca/seed123/best_phase2.pt`).
 
 ## Catatan versi
@@ -121,6 +123,7 @@ Unggah foto daun, tekan Deteksi. Memakai checkpoint CA terbaik
 - v6: konversi TFLite via Colab
 - v7: perbaikan nama paket litert-torch
 - v8: aplikasi Streamlit + perapihan komentar dan pesan konsol
+- v15: revisi aplikasi dari bimbingan 21 Okt 2026: layar pembuka, tutorial penggunaan, visualisasi Grad-CAM, unduh hasil deteksi sebagai PDF
 
 ## Troubleshooting
 

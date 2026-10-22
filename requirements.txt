@@ -14,3 +14,5 @@ pyyaml
 scikit-learn
 matplotlib
 tqdm
+# Penyusun laporan hasil deteksi PDF di aplikasi.
+fpdf2

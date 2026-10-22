@@ -53,7 +53,9 @@ GitHub tidak menerima password biasa — pakai Personal Access Token
 1. Buka share.streamlit.io, login dengan GitHub.
 2. New app → pilih repo `chili-leaf-detection`.
 3. Main file path: `app/streamlit_app.py`
-4. Deploy. Instalasi pertama makan waktu beberapa menit
+4. Klik "Advanced settings" → pilih Python 3.11 (wajib — file
+   runtime.txt TIDAK dibaca oleh Community Cloud) → Deploy.
+   Instalasi pertama makan waktu beberapa menit
    (torch CPU ~200 MB). Setelah jadi, dapat URL publik.
 
 ## Catatan
