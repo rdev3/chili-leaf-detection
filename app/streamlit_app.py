@@ -65,6 +65,7 @@ footer {visibility: hidden;}
 .fitur {
     background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px;
     padding: 0.8rem 0.6rem; text-align: center; height: 100%;
+    color: #14532d;
 }
 </style>
 """
@@ -292,7 +293,7 @@ def tampilkan_welcome(st):
         tampilkan_tutorial(st)
 
     st.caption(
-        "Made Ranggadeva Ratryananda Sandhi · ITB STIKOM Bali"
+        "Kerja Praktek ITB STIKOM Bali · Akurasi model pada data uji 99,73%"
     )
 
 
@@ -355,7 +356,6 @@ def main():
                 gambar = Image.open(io.BytesIO(gambar_bytes))
 
         if gambar is not None:
-            st.image(gambar, caption="Foto yang dipakai", width="stretch")
             if st.button("Deteksi", type="primary", width="stretch"):
                 with st.spinner("Menganalisis foto..."):
                     pred, probs = predict_image(model, gambar, device)
@@ -400,22 +400,31 @@ def main():
             for name in ["bacterial_spot", "healthy"]:
                 st.write(f"{INFO[name]['judul']}: {probs[name] * 100:.1f}%")
                 st.progress(probs[name])
-            st.image(
-                Image.open(io.BytesIO(hasil["overlay_png"])),
-                caption=(
-                    "Peta Grad-CAM. Warna merah menunjukkan bagian daun "
-                    "yang paling berpengaruh pada prediksi model."
-                ),
-                width="stretch",
-            )
-            nama_pdf = f"hasil-deteksi-{datetime.now():%Y%m%d-%H%M}.pdf"
-            st.download_button(
-                "Unduh Hasil (PDF)",
-                data=hasil["pdf"],
-                file_name=nama_pdf,
-                mime="application/pdf",
-                width="stretch",
-            )
+
+    # Foto asli dan peta Grad-CAM ditampilkan berdampingan pada baris
+    # tersendiri supaya ukurannya sama dan posisinya sejajar.
+    if gambar is not None:
+        kol_foto, kol_cam = st.columns(2)
+        with kol_foto:
+            st.image(gambar, caption="Foto yang dipakai", width="stretch")
+        with kol_cam:
+            if hasil is not None and hasil["gambar_id"] == hash(gambar_bytes):
+                st.image(
+                    Image.open(io.BytesIO(hasil["overlay_png"])),
+                    caption=(
+                        "Peta Grad-CAM. Warna merah menunjukkan bagian daun "
+                        "yang paling berpengaruh pada prediksi model."
+                    ),
+                    width="stretch",
+                )
+                nama_pdf = f"hasil-deteksi-{datetime.now():%Y%m%d-%H%M}.pdf"
+                st.download_button(
+                    "Unduh Hasil (PDF)",
+                    data=hasil["pdf"],
+                    file_name=nama_pdf,
+                    mime="application/pdf",
+                    width="stretch",
+                )
 
 
 if __name__ == "__main__":

@@ -123,7 +123,8 @@ Memakai checkpoint CA terbaik
 - v6: konversi TFLite via Colab
 - v7: perbaikan nama paket litert-torch
 - v8: aplikasi Streamlit + perapihan komentar dan pesan konsol
-- v15: revisi aplikasi dari bimbingan 21 Okt 2026: layar pembuka, tutorial penggunaan, visualisasi Grad-CAM, unduh hasil deteksi sebagai PDF
+- v15: revisi aplikasi dari bimbingan 21 Okt 2026 (v16: perbaikan kontras teks kartu fitur di tema gelap): layar pembuka, tutorial penggunaan, visualisasi Grad-CAM, unduh hasil deteksi sebagai PDF
+- v17: perapihan proporsi layout: foto asli dan Grad-CAM sejajar pada satu baris, tombol Deteksi di dekat kontrol unggah
 
 ## Troubleshooting
 
