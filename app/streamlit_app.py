@@ -135,8 +135,8 @@ h1, h2, h3 {font-family: "Figtree", "Segoe UI", sans-serif; font-weight: 700; le
 .no-fitur {font-family: ui-monospace, "Courier New", monospace; font-size: 0.8rem; letter-spacing: 0.1em; color: var(--green); margin-bottom: 0.8rem;}
 .judul-fitur {font-weight: 700; font-size: 1.05rem; margin-bottom: 0.35rem;}
 .fitur small {display: block; font-size: 0.9rem; line-height: 1.55; color: var(--muted);}
-.langkah-grid {display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.9rem 2.2rem; margin-top: 1.2rem;}
-.langkah {display: flex; gap: 0.9rem; align-items: flex-start;}
+.langkah-grid {column-count: 2; column-gap: 2.2rem; margin-top: 1.2rem;}
+.langkah {display: flex; gap: 0.9rem; align-items: flex-start; break-inside: avoid; margin-bottom: 0.9rem;}
 .langkah .no {
     flex: none; width: 2rem; height: 2rem; border-radius: 50%; background: var(--green-soft);
     color: var(--green-dark); font-weight: 700; font-size: 0.9rem; display: grid; place-items: center;
@@ -207,7 +207,8 @@ h1, h2, h3 {font-family: "Figtree", "Segoe UI", sans-serif; font-weight: 700; le
 
 @media (max-width: 760px) {
     .st-key-hero {padding: 2rem 1.4rem;}
-    .stat-grid, .grid-fitur, .langkah-grid {grid-template-columns: 1fr;}
+    .stat-grid, .grid-fitur {grid-template-columns: 1fr;}
+    .langkah-grid {column-count: 1;}
     .judul-halaman {font-size: 1.8rem;}
     .tag {display: none;}
 }
@@ -501,7 +502,7 @@ def tampilkan_tutorial(st):
 
 
 def html_bilah_atas(dengan_tag=True):
-    tag = '<div class="tag">Kerja Praktek · ITB STIKOM Bali</div>' if dengan_tag else ""
+    tag = '<div class="tag">Made Ranggadeva Ratyrananda Sandhi · ITB STIKOM Bali</div>' if dengan_tag else ""
     return (
         f'<div class="topbar"><div class="merek">{LOGO_SVG}'
         f"<span>Deteksi Daun Cabai</span></div>{tag}</div>"

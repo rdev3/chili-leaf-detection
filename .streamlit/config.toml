@@ -3,7 +3,7 @@
 [theme]
 base = "light"
 primaryColor = "#2E7D32"
-backgroundColor = "#EDF3E2"
+backgroundColor = "#EBE8E4"
 secondaryBackgroundColor = "#FFFFFF"
 textColor = "#11150C"
 font = "sans serif"
