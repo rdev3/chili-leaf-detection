@@ -110,7 +110,7 @@ header[data-testid="stHeader"] {background: transparent;}
 /* ---------- Hero ---------- */
 .st-key-hero {
     background: radial-gradient(120% 120% at 100% 0%, #1F6B45 0%, rgba(31,107,69,0) 55%), var(--green-dark);
-    border-radius: 28px; padding: 3rem 2.6rem; overflow: hidden;
+    border-radius: 28px; padding: 2.4rem 2.2rem; overflow: hidden;
 }
 .eyebrow {
     display: inline-block; background: rgba(198, 243, 107, 0.14); color: var(--lime);
@@ -126,7 +126,7 @@ header[data-testid="stHeader"] {background: transparent;}
 .stApp .st-key-hero [data-testid="stBaseButton-primary"] {background: var(--lime); color: var(--green-dark); padding: 0.7rem 1.8rem; font-size: 1rem;}
 .stApp .st-key-hero [data-testid="stBaseButton-primary"]:hover {background: var(--lime); color: var(--green-dark);}
 .hero-art {display: flex; justify-content: center;}
-.hero-art svg {width: 100%; max-width: 290px; height: auto;}
+.hero-art svg {width: 100%; max-width: 248px; height: auto;}
 
 /* ---------- Angka ringkas, fitur, langkah ---------- */
 .stat-grid {display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.2rem;}
@@ -187,7 +187,7 @@ header[data-testid="stHeader"] {background: transparent;}
 .hasil-sehat {background: var(--green-soft); border: 1px solid #BFE2CB;}
 .hasil-sakit {background: var(--chili-soft); border: 1px solid #F5C2B7;}
 .lencana {display: inline-block; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.28rem 0.75rem; border-radius: 999px; color: #FFF;}
-.hasil-sehat .lencana {background: var(--ok);}
+.hasil-sehat .lencana {background: var(--green);}
 .hasil-sakit .lencana {background: var(--chili);}
 .nama-hasil {font-family: "Fraunces", Georgia, serif; font-size: 2rem; font-weight: 600; margin: 0.7rem 0 0.1rem 0; line-height: 1.15;}
 .keyakinan {font-size: 0.92rem; color: var(--muted);}
@@ -202,7 +202,6 @@ header[data-testid="stHeader"] {background: transparent;}
 .isi-sakit {background: var(--chili);}
 .isi-sehat {background: var(--ok);}
 
-.st-key-panel-cam h3 {font-size: 1.5rem; margin: 0 0 0.5rem 0; padding: 0;}
 .st-key-panel-cam .teks-cam {font-size: 0.93rem; line-height: 1.6; color: var(--muted);}
 .legenda {height: 12px; border-radius: 999px; background: linear-gradient(90deg, #1D2BB8, #1FB6D6, #5BD16A, #F3E23B, #F58A1F, #D9261C); margin: 1rem 0 0.35rem 0;}
 .legenda-label {display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted); margin-bottom: 1.2rem;}
@@ -778,35 +777,40 @@ def main():
                     unsafe_allow_html=True,
                 )
 
-    # Peta Grad-CAM dan tombol unduh, tampil di baris tersendiri.
+    # Foto asli dan peta Grad-CAM berdampingan dengan ukuran sama supaya
+    # mudah dibandingkan, penjelasan dan unduh PDF di bawahnya.
     if hasil_valid:
         with st.container(key="panel-cam"):
-            kol_gambar, kol_teks = st.columns(2, gap="large", vertical_alignment="center")
-            with kol_gambar:
+            st.markdown(
+                '<div class="judul-panel"><span class="bulat">3</span>Peta Grad-CAM</div>',
+                unsafe_allow_html=True,
+            )
+            kol_foto, kol_cam = st.columns(2, gap="medium")
+            with kol_foto:
+                st.image(gambar, caption="Foto yang dipakai", width="stretch")
+            with kol_cam:
                 st.image(
                     Image.open(io.BytesIO(hasil["overlay_png"])),
-                    caption="Overlay Grad-CAM pada foto yang dipakai",
+                    caption="Peta Grad-CAM pada foto yang sama",
                     width="stretch",
                 )
-            with kol_teks:
-                st.markdown(
-                    "<h3>Peta Grad-CAM</h3>"
-                    "<p class=\"teks-cam\">Warna menunjukkan bagian daun yang paling berpengaruh pada "
-                    "prediksi model. Peta ini adalah fokus model, bukan batas pasti "
-                    "bercak penyakit.</p>"
-                    '<div class="legenda"></div>'
-                    '<div class="legenda-label"><span>Kurang berpengaruh</span>'
-                    "<span>Paling berpengaruh</span></div>",
-                    unsafe_allow_html=True,
-                )
-                nama_pdf = f"hasil-deteksi-{datetime.now():%Y%m%d-%H%M}.pdf"
-                st.download_button(
-                    "Unduh Hasil (PDF)",
-                    data=hasil["pdf"],
-                    file_name=nama_pdf,
-                    mime="application/pdf",
-                    width="stretch",
-                )
+            st.markdown(
+                "<p class=\"teks-cam\">Warna menunjukkan bagian daun yang paling berpengaruh pada "
+                "prediksi model. Peta ini adalah fokus model, bukan batas pasti "
+                "bercak penyakit.</p>"
+                '<div class="legenda"></div>'
+                '<div class="legenda-label"><span>Kurang berpengaruh</span>'
+                "<span>Paling berpengaruh</span></div>",
+                unsafe_allow_html=True,
+            )
+            nama_pdf = f"hasil-deteksi-{datetime.now():%Y%m%d-%H%M}.pdf"
+            st.download_button(
+                "Unduh Hasil (PDF)",
+                data=hasil["pdf"],
+                file_name=nama_pdf,
+                mime="application/pdf",
+                width="stretch",
+            )
 
     tahap = 3 if hasil_valid else (2 if gambar is not None else 1)
     tempat_stepper.markdown(html_stepper(tahap), unsafe_allow_html=True)
