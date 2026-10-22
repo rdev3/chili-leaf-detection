@@ -59,46 +59,52 @@ BULAN = [
 # CSS di sini untuk tipografi, chrome bawaan Streamlit, dan bab tampilan.
 GAYA = """
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,400;0,700;0,800;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&display=swap");
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
-.stApp {font-family: "Merriweather Sans", "Segoe UI", sans-serif;}
-h1, h2, h3 {letter-spacing: -0.02em;}
-.garis-tebal {border-top: 6px solid #FFFFFF; margin: 0 0 1.2rem 0;}
-.hero h1 {font-size: 2.9rem; font-weight: 800; line-height: 1.15; margin: 0 0 1rem 0;}
-.hero h1 .ungu {color: #6437FF;}
-.hero p {color: #C8C8C8; line-height: 1.6; max-width: 480px;}
-.panel-ungu {background: #6437FF; padding: 1.6rem 1.4rem; margin-top: 2.2rem;}
-.panel-ungu h2 {color: #FFFFFF; font-size: 1.5rem; font-weight: 800; margin: 0 0 1.1rem 0;}
+.stApp {font-family: "Figtree", "Segoe UI", sans-serif;}
+.stApp h1 {font-weight: 600;}
+.st-key-hero {
+    background: #6437FF; border-radius: 20px; padding: 2rem 1.8rem 1.4rem 1.8rem;
+}
+.st-key-hero h1 {
+    color: #FFFFFF; font-size: 3.1rem; font-weight: 400;
+    line-height: 1.1; margin: 0 0 1rem 0;
+}
+.st-key-hero p {color: #FFFFFF; font-size: 1.15rem; line-height: 1.5; margin: 0;}
+.panel-putih {background: #FFFFFF; border-radius: 20px; padding: 1.8rem 1.6rem; margin-top: 1.6rem;}
+.panel-putih h2 {color: #000000; font-size: 1.6rem; font-weight: 600; margin: 0 0 1.2rem 0;}
 .grid-fitur {display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem;}
 @media (max-width: 640px) {.grid-fitur {grid-template-columns: 1fr;}}
-.fitur {border-top: 3px solid #FFFFFF; padding-top: 0.8rem; color: #FFFFFF;}
-.judul-fitur {font-size: 1.05rem; font-weight: 700; margin-bottom: 0.35rem;}
-.fitur small {display: block; font-size: 0.875rem; line-height: 1.5;}
-.papan {background: #F4F4F4; color: #141414; padding: 1.6rem 1.4rem; margin-top: 2.2rem;}
-.papan h2 {color: #141414; font-size: 1.5rem; font-weight: 800; margin: 0 0 0.4rem 0;}
-.langkah {display: flex; gap: 1rem; padding: 0.7rem 0; border-top: 1px solid #C8C8C8;}
-.langkah .no {font-size: 1.7rem; font-weight: 800; color: #6437FF; line-height: 1.1; min-width: 2.4rem;}
-.langkah p {margin: 0; font-size: 0.95rem; line-height: 1.55;}
+.fitur {border-top: 2px solid #6437FF; padding-top: 0.8rem;}
+.judul-fitur {color: #6437FF; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.35rem;}
+.fitur small {display: block; color: #000000; font-size: 0.925rem; line-height: 1.5;}
+.pita-ungu {background: #6437FF; border-radius: 20px; padding: 1.6rem; margin-top: 1.6rem;}
+.pita-ungu h2 {color: #FFFFFF; font-size: 1.6rem; font-weight: 600; margin: 0 0 1.1rem 0;}
+.kartu-langkah {background: #FFFFFF; border-radius: 16px; padding: 0.6rem 1.3rem;}
+.langkah {display: flex; gap: 1rem; padding: 0.65rem 0; border-top: 1px solid #E3E3E3;}
+.langkah-awal {border-top: none;}
+.langkah .no {font-size: 1.5rem; font-weight: 700; color: #6437FF; line-height: 1.15; min-width: 2.2rem;}
+.langkah p {margin: 0; color: #000000; font-size: 0.95rem; line-height: 1.55;}
 button[kind="primary"] {
-    background-color: #4FFD7A; color: #000000; border: none;
-    border-radius: 999px; font-weight: 700;
+    background-color: #FFFF00; color: #000000; border: none;
+    border-radius: 999px; font-family: Arial, sans-serif; font-weight: 600;
 }
-button[kind="primary"]:hover {background-color: #35D862; color: #000000;}
+button[kind="primary"]:hover {background-color: #E6E600; color: #000000;}
 button[kind="primary"]:focus-visible {
-    box-shadow: 0 0 0 3px rgba(79, 253, 122, 0.45); outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 0, 0.55); outline: none;
 }
 </style>
 """
 
-# Marka daun wireframe, jangkar visual layar pembuka mengikuti
+# Marka daun wireframe putih, karya visual di panel hero mengikuti
 # bahasa geometris triangulasi pada DESIGN.md.
 MARKA_SVG = """
 <svg viewBox="0 0 320 320" width="100%" xmlns="http://www.w3.org/2000/svg">
-  <g stroke="#4FFD7A" stroke-width="2.5" stroke-linejoin="round" fill="none">
-    <polygon points="104,232 150,104 248,52" fill="rgba(79,253,122,0.07)" stroke="none"/>
-    <polygon points="150,174 232,188 168,240" fill="rgba(79,253,122,0.05)" stroke="none"/>
-    <polygon points="104,232 112,168 150,174" fill="rgba(79,253,122,0.09)" stroke="none"/>
+  <g stroke="#FFFFFF" stroke-width="2.5" stroke-linejoin="round" fill="none">
+    <polygon points="104,232 150,104 248,52" fill="rgba(255,255,255,0.10)" stroke="none"/>
+    <polygon points="150,174 232,188 168,240" fill="rgba(255,255,255,0.07)" stroke="none"/>
+    <polygon points="104,232 112,168 150,174" fill="rgba(255,255,255,0.16)" stroke="none"/>
     <path d="M70,268 L104,232 L112,168 L150,104 L248,52 L268,118 L232,188 L168,240 Z"/>
     <path d="M104,232 L150,174 L193,120 L248,52"/>
     <path d="M112,168 L150,174 M150,104 L150,174 M150,104 L193,120 M268,118 L193,120 M232,188 L150,174 M168,240 L150,174 M112,168 L168,240"/>
@@ -349,25 +355,23 @@ def tampilkan_tutorial(st):
 
 
 def tampilkan_welcome(st):
-    kiri, kanan = st.columns([3, 2])
-    with kiri:
-        st.markdown(
-            """
-            <div class="garis-tebal"></div>
-            <div class="hero">
-                <h1>Deteksi Bercak Daun <span class="ungu">Bakteri</span> pada Daun Cabai</h1>
+    with st.container(key="hero"):
+        kiri, kanan = st.columns([3, 2])
+        with kiri:
+            st.markdown(
+                """
+                <h1>Deteksi Bercak Daun Bakteri pada Daun Cabai</h1>
                 <p>Aplikasi ini memprediksi apakah sehelai daun cabai sehat atau
                 terinfeksi bacterial spot dari sebuah foto, memakai model
                 MobileNetV3-Small dengan Coordinate Attention.</p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        if st.button("Mulai Deteksi", type="primary", width="stretch"):
-            st.session_state.mulai = True
-            st.rerun()
-    with kanan:
-        st.markdown(MARKA_SVG, unsafe_allow_html=True)
+                """,
+                unsafe_allow_html=True,
+            )
+            if st.button("Mulai Deteksi", type="primary", width="stretch"):
+                st.session_state.mulai = True
+                st.rerun()
+        with kanan:
+            st.markdown(MARKA_SVG, unsafe_allow_html=True)
 
     fitur = [
         ("Deteksi dari Foto",
@@ -382,17 +386,19 @@ def tampilkan_welcome(st):
         for judul, isi in fitur
     )
     st.markdown(
-        f'<div class="panel-ungu"><h2>Tiga Hal yang Bisa Dilakukan</h2>'
+        f'<div class="panel-putih"><h2>Tiga Hal yang Bisa Dilakukan</h2>'
         f'<div class="grid-fitur">{kartu}</div></div>',
         unsafe_allow_html=True,
     )
 
     langkah_html = "".join(
-        f'<div class="langkah"><div class="no">{i}</div><p>{teks}</p></div>'
+        f'<div class="langkah{" langkah-awal" if i == 1 else ""}">'
+        f'<div class="no">{i}</div><p>{teks}</p></div>'
         for i, teks in enumerate(LANGKAH_TUTORIAL, start=1)
     )
     st.markdown(
-        f'<div class="papan"><h2>Cara Penggunaan</h2>{langkah_html}</div>',
+        f'<div class="pita-ungu"><h2>Cara Penggunaan</h2>'
+        f'<div class="kartu-langkah">{langkah_html}</div></div>',
         unsafe_allow_html=True,
     )
 
@@ -424,7 +430,6 @@ def main():
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         return load_model(device=device), device
 
-    st.markdown('<div class="garis-tebal"></div>', unsafe_allow_html=True)
     atas = st.columns([5, 1])
     with atas[0]:
         st.title("Deteksi Penyakit Bercak Daun Bakteri")
