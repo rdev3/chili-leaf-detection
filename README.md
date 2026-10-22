@@ -130,6 +130,7 @@ Memakai checkpoint CA terbaik
 - v20: kartu fitur dibuat seragam (tiga kolom sama lebar) dan lebih menonjol: isian #F9F9F9, bingkai #E7E7E7, bayangan tipis
 - v21: kartu fitur dipindah ke satu grid CSS supaya lebar dan tinggi ketiganya sama persis; di layar sempit grid menumpuk
 - v22: isi PDF ditambah nama file, bagian Tentang Model, bagian Catatan keterbatasan, kalimat penjelas Grad-CAM, dan kode QR tautan aplikasi (library qrcode ditambahkan)
+- v23: DESIGN.md diganti ke Cavalry, UI di-rework: tema charcoal terkunci, hero split dengan marka daun wireframe, panel fitur ungu, papan Cara Penggunaan, tombol aksi hijau neon
 
 ## Troubleshooting
 

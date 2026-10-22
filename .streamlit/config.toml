@@ -1,8 +1,8 @@
-# Tema mengikuti DESIGN.md: kanvas putih, teks hitam, satu warna aksi biru.
-# Tema dikunci terang di sini supaya tampilan sama di semua perangkat.
+# Tema mengikuti DESIGN.md (Cavalry): panggung charcoal, teks putih,
+# ungu untuk panel promosi, hijau neon untuk aksi.
 [theme]
-primaryColor = "#2B4EFF"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F9F9F9"
-textColor = "#000000"
+primaryColor = "#4FFD7A"
+backgroundColor = "#141414"
+secondaryBackgroundColor = "#292929"
+textColor = "#FFFFFF"
 font = "sans serif"
