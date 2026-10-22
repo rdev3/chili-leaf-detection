@@ -135,6 +135,7 @@ Memakai checkpoint CA terbaik
 - v25: DESIGN.md diganti ke Deta Surf, UI di-rework lagi: kanvas putih, hero gradien langit dengan ilustrasi pesawat kertas, serif Gambarino dan sans Switzer dari Fontshare, kartu fitur putih berbatas tipis, tombol pill biru
 - v26: DESIGN.md diganti ke Designjoy, UI di-rework lagi: panel hero hitam dengan kartu gradien oranye-pink-ungu berisi cluster smiley, halaman off-white hangat, kartu fitur putih berbatas dotted, CTA pill oranye teks hitam, Figtree
 - v27: revisi desain dari Claude diterapkan dan dirapikan: arah botani hijau-krem (Fraunces + Figtree), topbar, stepper, panel bernomor, kartu hasil custom; proporsi panel Grad-CAM diperbaiki (foto asli dan peta berdampingan ukuran sama), hero dikencangkan, lencana sehat digelapkan demi kontras
+- v28: proporsi panel hasil diperbaiki dari screenshot user: bar probabilitas dipindah ke dalam kartu hasil dengan garis pemisah, persen sangat kecil digambar sebagai ruas minimum 1,5% agar terbaca sebagai data, track lebih tipis, kotak keadaan kosong dipadatkan
 
 ## Troubleshooting
 

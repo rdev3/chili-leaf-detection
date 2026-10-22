@@ -177,10 +177,10 @@ header[data-testid="stHeader"] {background: transparent;}
 .info-berkas {display: flex; justify-content: space-between; gap: 0.6rem; font-size: 0.82rem; color: var(--muted); margin: 0.2rem 0 0.9rem 0;}
 
 .kosong {
-    border: 1.5px dashed #CFC9B6; border-radius: 18px; padding: 2.6rem 1.2rem;
+    border: 1.5px dashed #CFC9B6; border-radius: 18px; padding: 1.7rem 1.2rem;
     text-align: center; color: var(--muted); font-size: 0.95rem; line-height: 1.55;
 }
-.kosong svg {width: 54px; height: 54px; margin-bottom: 0.7rem; opacity: 0.85;}
+.kosong svg {width: 44px; height: 44px; margin-bottom: 0.6rem; opacity: 0.85;}
 .kosong b {display: block; color: var(--ink); font-size: 1.02rem; margin-bottom: 0.2rem;}
 
 .hasil {border-radius: 18px; padding: 1.3rem 1.4rem;}
@@ -193,11 +193,12 @@ header[data-testid="stHeader"] {background: transparent;}
 .keyakinan {font-size: 0.92rem; color: var(--muted);}
 .keyakinan b {color: var(--ink); font-size: 1.05rem;}
 .saran {margin: 0.9rem 0 0 0; font-size: 0.93rem; line-height: 1.55;}
+.garis-hasil {border-top: 1px solid rgba(20, 32, 26, 0.12); margin-top: 1rem;}
 .peringatan {background: #FFF6DD; border: 1px solid #F1D58A; color: #6B4A00; border-radius: 14px; padding: 0.8rem 1rem; font-size: 0.9rem; line-height: 1.5; margin-bottom: 0.9rem;}
 .peringatan b {display: block; margin-bottom: 0.1rem;}
-.bar {margin-top: 1.1rem;}
+.bar {margin-top: 0.75rem;}
 .bar-atas {display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600;}
-.track {height: 10px; background: #EEE9DC; border-radius: 999px; overflow: hidden; margin-top: 0.4rem;}
+.track {height: 8px; background: rgba(255, 255, 255, 0.65); border-radius: 999px; overflow: hidden; margin-top: 0.35rem;}
 .isi-bar {height: 100%; border-radius: 999px;}
 .isi-sakit {background: var(--chili);}
 .isi-sehat {background: var(--ok);}
@@ -547,18 +548,22 @@ def html_hasil(pred, probs):
     bar = ""
     for nama, kelas_bar in [("bacterial_spot", "isi-sakit"), ("healthy", "isi-sehat")]:
         persen = probs[nama] * 100
+        # Persen sangat kecil tetap digambar sebagai ruas pendek yang
+        # terbaca sebagai data, bukan garis sisa di ujung track.
+        lebar = persen if persen == 0 else max(persen, 1.5)
         bar += (
             f'<div class="bar"><div class="bar-atas"><span>{INFO[nama]["judul"]}</span>'
             f"<span>{persen:.1f}%</span></div>"
             f'<div class="track"><div class="isi-bar {kelas_bar}" '
-            f'style="width: {persen:.1f}%"></div></div></div>'
+            f'style="width: {lebar:.1f}%"></div></div></div>'
         )
     return (
         f"{peringatan}"
         f'<div class="hasil {kelas}"><span class="lencana">{lencana}</span>'
         f'<div class="nama-hasil">{info["judul"]}</div>'
         f'<div class="keyakinan">Keyakinan model <b>{probs[pred] * 100:.1f}%</b></div>'
-        f'<p class="saran">{info["saran"]}</p></div>{bar}'
+        f'<p class="saran">{info["saran"]}</p>'
+        f'<div class="garis-hasil"></div>{bar}</div>'
     )
 
 
