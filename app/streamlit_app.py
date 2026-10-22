@@ -55,76 +55,207 @@ BULAN = [
     "Juli", "Agustus", "September", "Oktober", "November", "Desember",
 ]
 
-# Tema warna diatur di .streamlit/config.toml mengikuti DESIGN.md.
-# CSS di sini untuk tipografi, chrome bawaan Streamlit, dan bab tampilan.
+# Tema warna dasar diatur di .streamlit/config.toml. Seluruh gaya lain
+# (tipografi, kartu, hasil deteksi) ada di CSS berikut.
 GAYA = """
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&family=Playfair+Display:ital,wght@1,500&display=swap");
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-.stApp {font-family: "Figtree", "Segoe UI", sans-serif;}
-h1, h2, h3 {font-weight: 700; letter-spacing: -0.01em;}
-.st-key-hero {background: #000000; border-radius: 24px; padding: 2.4rem 2rem;}
+@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&display=swap");
+
+:root {
+    --ink: #14201A;
+    --muted: #5B6B62;
+    --paper: #F5F2EA;
+    --card: #FFFFFF;
+    --line: #E2DDCF;
+    --green: #166A3E;
+    --green-dark: #0E3B26;
+    --green-soft: #E8F5EC;
+    --lime: #C6F36B;
+    --chili: #D9381E;
+    --chili-soft: #FDECE8;
+    --ok: #1E8E4F;
+}
+
+#MainMenu, footer {visibility: hidden;}
+header[data-testid="stHeader"] {background: transparent;}
+.stApp {background: var(--paper); font-family: "Figtree", "Segoe UI", sans-serif; color: var(--ink);}
+.block-container {max-width: 1080px; padding-top: 1.6rem; padding-bottom: 4rem;}
+.stApp h1, .stApp h2, .stApp h3 {font-family: "Fraunces", Georgia, serif; font-weight: 600; letter-spacing: -0.01em; color: var(--ink);}
+
+/* ---------- Bilah atas ---------- */
+.topbar {display: flex; justify-content: space-between; align-items: center; padding: 0.2rem 0 1.2rem 0; gap: 1rem;}
+.merek {display: flex; align-items: center; gap: 0.6rem; font-weight: 700; font-size: 1.05rem;}
+.merek svg {width: 32px; height: 32px; flex: none;}
+.tag {font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 0.3rem 0.85rem; white-space: nowrap;}
+
+/* ---------- Tombol ---------- */
+.stApp [data-testid="stBaseButton-primary"], .stApp button[kind="primary"] {
+    background: var(--green); color: #FFFFFF; border: none; border-radius: 999px;
+    font-weight: 700; padding: 0.55rem 1.4rem; transition: transform .12s ease, filter .12s ease;
+}
+.stApp [data-testid="stBaseButton-primary"]:hover, .stApp button[kind="primary"]:hover {
+    background: var(--green); color: #FFFFFF; filter: brightness(1.12); transform: translateY(-1px);
+}
+.stApp [data-testid="stBaseButton-secondary"], .stApp [data-testid="stDownloadButton"] button {
+    background: var(--card); color: var(--ink); border: 1px solid #CFC9B6; border-radius: 999px;
+    font-weight: 600; padding: 0.5rem 1.2rem;
+}
+.stApp [data-testid="stBaseButton-secondary"]:hover, .stApp [data-testid="stDownloadButton"] button:hover {
+    border-color: var(--green); color: var(--green);
+}
+.stApp [data-testid="stDownloadButton"] button {background: var(--green-dark); color: #FFFFFF; border-color: var(--green-dark);}
+.stApp [data-testid="stDownloadButton"] button:hover {background: var(--green); color: #FFFFFF; border-color: var(--green);}
+.stApp button:focus-visible {outline: none; box-shadow: 0 0 0 3px rgba(22, 106, 62, 0.35);}
+
+/* ---------- Hero ---------- */
+.st-key-hero {
+    background: radial-gradient(120% 120% at 100% 0%, #1F6B45 0%, rgba(31,107,69,0) 55%), var(--green-dark);
+    border-radius: 28px; padding: 3rem 2.6rem; overflow: hidden;
+}
 .eyebrow {
-    font-family: ui-monospace, "Courier New", monospace; font-size: 0.75rem;
-    letter-spacing: 0.08em; text-transform: uppercase; color: #FBBF24; margin-bottom: 1rem;
+    display: inline-block; background: rgba(198, 243, 107, 0.14); color: var(--lime);
+    border-radius: 999px; padding: 0.3rem 0.85rem; font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.04em; margin-bottom: 1.2rem;
 }
-.st-key-hero h1 {color: #FFFFFF; font-size: 3.1rem; line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 0.6rem 0;}
-.naskah {
-    font-family: "Playfair Display", Georgia, serif; font-style: italic; font-weight: 500;
-    font-size: 1.9rem; color: #FFFFFF; margin: 0 0 1rem 0;
+.st-key-hero h1 {
+    color: #FFFFFF; font-size: clamp(2.1rem, 4.2vw, 3.3rem); line-height: 1.1;
+    margin: 0 0 1rem 0; padding: 0;
 }
-.st-key-hero .isi {color: #9CA3AF; font-size: 0.95rem; line-height: 1.55; max-width: 480px; margin: 0;}
-.kartu-gradien {
-    background: linear-gradient(135deg, #F97316 0%, #EC4899 55%, #9333EA 100%);
-    border-radius: 16px; padding: 1.1rem 0.8rem; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+.st-key-hero h1 em {color: var(--lime); font-style: italic;}
+.hero-sub {color: #B9CBBF; font-size: 1.05rem; line-height: 1.6; max-width: 30rem; margin: 0 0 1.6rem 0;}
+.stApp .st-key-hero [data-testid="stBaseButton-primary"] {background: var(--lime); color: var(--green-dark); padding: 0.7rem 1.8rem; font-size: 1rem;}
+.stApp .st-key-hero [data-testid="stBaseButton-primary"]:hover {background: var(--lime); color: var(--green-dark);}
+.hero-art {display: flex; justify-content: center;}
+.hero-art svg {width: 100%; max-width: 290px; height: auto;}
+
+/* ---------- Angka ringkas, fitur, langkah ---------- */
+.stat-grid {display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.2rem;}
+.stat {background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 1.1rem 1.3rem;}
+.stat b {display: block; font-family: "Fraunces", Georgia, serif; font-size: 1.9rem; font-weight: 600; color: var(--green); line-height: 1.2;}
+.stat span {color: var(--muted); font-size: 0.88rem;}
+.bab-label {font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin: 3.2rem 0 0.4rem 0;}
+.judul-bab {font-size: 2rem; margin: 0 0 0.2rem 0; padding: 0;}
+.grid-fitur {display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.2rem;}
+.fitur {background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 1.5rem;}
+.no-fitur {font-family: ui-monospace, "Courier New", monospace; font-size: 0.8rem; letter-spacing: 0.1em; color: var(--green); margin-bottom: 0.8rem;}
+.judul-fitur {font-weight: 700; font-size: 1.05rem; margin-bottom: 0.35rem;}
+.fitur small {display: block; font-size: 0.9rem; line-height: 1.55; color: var(--muted);}
+.langkah-grid {display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.9rem 2.2rem; margin-top: 1.2rem;}
+.langkah {display: flex; gap: 0.9rem; align-items: flex-start;}
+.langkah .no {
+    flex: none; width: 2rem; height: 2rem; border-radius: 50%; background: var(--green-soft);
+    color: var(--green); font-weight: 700; font-size: 0.9rem; display: grid; place-items: center;
 }
-.judul-bab {font-size: 2.2rem; margin: 3rem 0 0.4rem 0;}
-.naskah-inline {font-family: "Playfair Display", Georgia, serif; font-style: italic; font-weight: 500;}
-.grid-fitur {display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1.4rem;}
-@media (max-width: 640px) {.grid-fitur {grid-template-columns: 1fr;}}
-.fitur {background: #FFFFFF; border: 1.5px dotted #9CA3AF; border-radius: 16px; padding: 1.5rem;}
-.judul-fitur {font-weight: 700; font-size: 1.05rem; margin-bottom: 0.4rem;}
-.fitur small {display: block; font-size: 0.875rem; line-height: 1.5;}
-.bab-langkah {margin-top: 3rem;}
-.langkah {display: flex; gap: 1rem; padding: 0.8rem 0; border-top: 1px solid rgba(156, 163, 175, 0.55);}
-.langkah-awal {border-top: none;}
-.langkah .no {font-size: 1.4rem; font-weight: 700; line-height: 1.2; min-width: 2.2rem;}
-.langkah p {margin: 0; font-size: 0.95rem; line-height: 1.55;}
-button[kind="primary"] {
-    background-color: #F97316; color: #000000; border: none;
-    border-radius: 999px; font-weight: 700;
+.langkah p {margin: 0.2rem 0 0 0; font-size: 0.95rem; line-height: 1.55;}
+.st-key-cta {background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 2.2rem 1.5rem 1.8rem 1.5rem; margin-top: 3rem; text-align: center;}
+.st-key-cta h2 {font-size: 1.7rem; margin: 0 0 0.3rem 0; padding: 0;}
+.st-key-cta [data-testid="stMarkdownContainer"] {text-align: center;}
+.st-key-cta .cta-teks {color: var(--muted); margin: 0 0 1.2rem 0;}
+
+/* ---------- Halaman deteksi ---------- */
+.judul-halaman {font-family: "Fraunces", Georgia, serif; font-size: 2.3rem; font-weight: 600; line-height: 1.15; margin: 0.2rem 0 0.3rem 0; letter-spacing: -0.01em;}
+.sub-halaman {color: var(--muted); font-size: 1rem; margin: 0 0 1rem 0;}
+.stepper {display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.4rem 0 1.4rem 0;}
+.step {display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.9rem 0.4rem 0.45rem; border-radius: 999px; background: var(--card); border: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; font-weight: 600;}
+.step i {font-style: normal; width: 1.45rem; height: 1.45rem; border-radius: 50%; display: grid; place-items: center; background: #EEE9DC; font-size: 0.75rem;}
+.step.aktif {border-color: var(--green); background: var(--green-soft); color: var(--green-dark);}
+.step.aktif i, .step.selesai i {background: var(--green); color: #FFFFFF;}
+.step.selesai {color: var(--green-dark);}
+
+.st-key-panel-input, .st-key-panel-hasil, .st-key-panel-cam {
+    background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 1.4rem 1.5rem;
 }
-button[kind="primary"]:hover {background-color: #F97316; color: #000000; filter: brightness(0.93);}
-button[kind="primary"]:focus-visible {
-    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.5); outline: none;
+.st-key-panel-cam {margin-top: 1.2rem;}
+.judul-panel {font-weight: 700; font-size: 1.05rem; margin: 0 0 0.9rem 0; display: flex; align-items: center; gap: 0.55rem;}
+.judul-panel .bulat {width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--green); color: #FFF; display: grid; place-items: center; font-size: 0.78rem;}
+.st-key-panel-input [data-testid="stFileUploaderDropzone"] {
+    background: #F8F6EF; border: 1.5px dashed #B9B39F; border-radius: 16px; padding: 1.6rem 1rem;
+}
+.st-key-panel-input [data-testid="stFileUploaderDropzone"]:hover {border-color: var(--green);}
+.st-key-panel-input [data-testid="stImage"] img, .st-key-panel-cam [data-testid="stImage"] img {border-radius: 14px;}
+.st-key-panel-input [data-testid="stImage"] img {max-height: 300px; object-fit: contain; background: #F8F6EF;}
+.info-berkas {display: flex; justify-content: space-between; gap: 0.6rem; font-size: 0.82rem; color: var(--muted); margin: 0.2rem 0 0.9rem 0;}
+
+.kosong {
+    border: 1.5px dashed #CFC9B6; border-radius: 18px; padding: 2.6rem 1.2rem;
+    text-align: center; color: var(--muted); font-size: 0.95rem; line-height: 1.55;
+}
+.kosong svg {width: 54px; height: 54px; margin-bottom: 0.7rem; opacity: 0.85;}
+.kosong b {display: block; color: var(--ink); font-size: 1.02rem; margin-bottom: 0.2rem;}
+
+.hasil {border-radius: 18px; padding: 1.3rem 1.4rem;}
+.hasil-sehat {background: var(--green-soft); border: 1px solid #BFE2CB;}
+.hasil-sakit {background: var(--chili-soft); border: 1px solid #F5C2B7;}
+.lencana {display: inline-block; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.28rem 0.75rem; border-radius: 999px; color: #FFF;}
+.hasil-sehat .lencana {background: var(--ok);}
+.hasil-sakit .lencana {background: var(--chili);}
+.nama-hasil {font-family: "Fraunces", Georgia, serif; font-size: 2rem; font-weight: 600; margin: 0.7rem 0 0.1rem 0; line-height: 1.15;}
+.keyakinan {font-size: 0.92rem; color: var(--muted);}
+.keyakinan b {color: var(--ink); font-size: 1.05rem;}
+.saran {margin: 0.9rem 0 0 0; font-size: 0.93rem; line-height: 1.55;}
+.peringatan {background: #FFF6DD; border: 1px solid #F1D58A; color: #6B4A00; border-radius: 14px; padding: 0.8rem 1rem; font-size: 0.9rem; line-height: 1.5; margin-bottom: 0.9rem;}
+.peringatan b {display: block; margin-bottom: 0.1rem;}
+.bar {margin-top: 1.1rem;}
+.bar-atas {display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600;}
+.track {height: 10px; background: #EEE9DC; border-radius: 999px; overflow: hidden; margin-top: 0.4rem;}
+.isi-bar {height: 100%; border-radius: 999px;}
+.isi-sakit {background: var(--chili);}
+.isi-sehat {background: var(--ok);}
+
+.st-key-panel-cam h3 {font-size: 1.5rem; margin: 0 0 0.5rem 0; padding: 0;}
+.st-key-panel-cam .teks-cam {font-size: 0.93rem; line-height: 1.6; color: var(--muted);}
+.legenda {height: 12px; border-radius: 999px; background: linear-gradient(90deg, #1D2BB8, #1FB6D6, #5BD16A, #F3E23B, #F58A1F, #D9261C); margin: 1rem 0 0.35rem 0;}
+.legenda-label {display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted); margin-bottom: 1.2rem;}
+.catatan-kaki {text-align: center; color: var(--muted); font-size: 0.82rem; margin-top: 2.2rem; line-height: 1.6;}
+
+[data-testid="stExpander"] {background: var(--card); border: 1px solid var(--line); border-radius: 16px;}
+[data-testid="stExpander"] details {border: none;}
+
+@media (max-width: 760px) {
+    .st-key-hero {padding: 2rem 1.4rem;}
+    .stat-grid, .grid-fitur, .langkah-grid {grid-template-columns: 1fr;}
+    .judul-halaman {font-size: 1.8rem;}
+    .tag {display: none;}
 }
 </style>
 """
 
-# Cluster smiley warna-warni, motif utama pada DESIGN.md, digambar
-# sebagai lingkaran datar dengan wajah garis sederhana.
-MARKA_SVG = """
-<svg viewBox="0 0 260 190" width="100%" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="44" cy="40" r="26" fill="#FBBF24"/>
-  <circle cx="178" cy="66" r="40" fill="#2563EB"/>
-  <circle cx="200" cy="132" r="34" fill="#EC4899"/>
-  <circle cx="130" cy="148" r="30" fill="#22C55E"/>
-  <circle cx="88" cy="92" r="52" fill="#F97316"/>
-  <g fill="#111111">
-    <circle cx="36" cy="36" r="3.4"/><circle cx="52" cy="36" r="3.4"/>
-    <circle cx="166" cy="60" r="4.4"/><circle cx="190" cy="60" r="4.4"/>
-    <circle cx="189" cy="127" r="3.8"/><circle cx="211" cy="127" r="3.8"/>
-    <circle cx="120" cy="144" r="3.4"/><circle cx="140" cy="144" r="3.4"/>
-    <circle cx="70" cy="84" r="5.6"/><circle cx="106" cy="84" r="5.6"/>
+# Ikon daun dengan bingkai pemindai, dipakai di hero dan merek.
+LOGO_SVG = """
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <rect width="32" height="32" rx="9" fill="#166A3E"/>
+  <path d="M16 6c6 2.6 8.6 9 0 20C7.400 15 10 8.600 16 6Z" fill="#C6F36B"/>
+  <path d="M16 9v16" stroke="#166A3E" stroke-width="1.4" stroke-linecap="round"/>
+</svg>
+"""
+
+DAUN_SVG = """
+<svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustrasi daun cabai dengan bingkai pemindai">
+  <circle cx="160" cy="160" r="140" fill="#FFFFFF" fill-opacity="0.05"/>
+  <path d="M160 36C246 76 280 172 160 288C40 172 74 76 160 36Z" fill="#2FA05F"/>
+  <path d="M160 36C246 76 280 172 160 288Z" fill="#1F8A4D"/>
+  <g stroke="#0E3B26" stroke-opacity="0.55" stroke-width="3" stroke-linecap="round" fill="none">
+    <path d="M160 50V286"/>
+    <path d="M160 100L118 78M160 100L202 78"/>
+    <path d="M160 146L100 118M160 146L220 118"/>
+    <path d="M160 192L108 160M160 192L212 160"/>
+    <path d="M160 236L128 206M160 236L192 206"/>
   </g>
-  <g fill="none" stroke="#111111" stroke-linecap="round">
-    <path d="M36,46 Q44,53 52,46" stroke-width="3"/>
-    <path d="M165,72 Q178,83 191,72" stroke-width="3.6"/>
-    <path d="M189,137 Q200,145 211,137" stroke-width="3.2"/>
-    <path d="M120,154 Q130,161 140,154" stroke-width="3"/>
-    <path d="M69,98 Q88,114 107,98" stroke-width="4.6"/>
+  <g fill="#7A3B14" fill-opacity="0.9">
+    <circle cx="124" cy="134" r="9"/><circle cx="206" cy="172" r="11"/>
+    <circle cx="140" cy="206" r="7"/><circle cx="188" cy="112" r="6"/>
   </g>
+  <g stroke="#C6F36B" stroke-width="5" stroke-linecap="round" fill="none">
+    <path d="M52 92V58H86"/><path d="M268 92V58H234"/>
+    <path d="M52 228V262H86"/><path d="M268 228V262H234"/>
+  </g>
+</svg>
+"""
+
+IKON_KOSONG_SVG = """
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M32 8c14 6 20 20 0 46C12 28 18 14 32 8Z" fill="#E8F5EC" stroke="#166A3E" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M32 14v38" stroke="#166A3E" stroke-width="2.5" stroke-linecap="round"/>
 </svg>
 """
 
@@ -364,68 +495,151 @@ def buat_pdf(gambar, overlay, pred, probs, nama_file):
     return bytes(pdf.output())
 
 
+# ----------------------------------------------------------------------
+# Tampilan (UI). Bagian di bawah hanya mengatur layout dan gaya,
+# logika model, Grad-CAM, dan PDF ada di fungsi-fungsi di atas.
+# ----------------------------------------------------------------------
+
+def html_langkah():
+    return '<div class="langkah-grid">' + "".join(
+        f'<div class="langkah"><div class="no">{i}</div><p>{teks}</p></div>'
+        for i, teks in enumerate(LANGKAH_TUTORIAL, start=1)
+    ) + "</div>"
+
+
 def tampilkan_tutorial(st):
-    for i, langkah in enumerate(LANGKAH_TUTORIAL, start=1):
-        st.write(f"{i}. {langkah}")
+    st.markdown(html_langkah(), unsafe_allow_html=True)
+
+
+def html_bilah_atas(dengan_tag=True):
+    tag = '<div class="tag">Kerja Praktek · ITB STIKOM Bali</div>' if dengan_tag else ""
+    return (
+        f'<div class="topbar"><div class="merek">{LOGO_SVG}'
+        f"<span>Deteksi Daun Cabai</span></div>{tag}</div>"
+    )
+
+
+def html_stepper(tahap):
+    """tahap: 1 = pilih foto, 2 = siap deteksi, 3 = hasil tampil."""
+    nama = ["Pilih foto", "Klik Deteksi", "Baca hasil"]
+    potongan = []
+    for i, teks in enumerate(nama, start=1):
+        if i < tahap or tahap == 3:
+            kelas, tanda = "selesai", "✓"
+        elif i == tahap:
+            kelas, tanda = "aktif", str(i)
+        else:
+            kelas, tanda = "", str(i)
+        potongan.append(f'<div class="step {kelas}"><i>{tanda}</i>{teks}</div>')
+    return '<div class="stepper">' + "".join(potongan) + "</div>"
+
+
+def html_hasil(pred, probs):
+    info = INFO[pred]
+    kelas = "hasil-sehat" if pred == "healthy" else "hasil-sakit"
+    lencana = "Tidak ada gejala" if pred == "healthy" else "Terdeteksi gejala"
+    peringatan = ""
+    if probs[pred] < AMBANG_KEYAKINAN:
+        peringatan = (
+            '<div class="peringatan"><b>Keyakinan model rendah</b>'
+            "Hasil di bawah belum bisa dipegang. Coba foto satu helai daun "
+            "dengan background polos dan pencahayaan yang cukup.</div>"
+        )
+    bar = ""
+    for nama, kelas_bar in [("bacterial_spot", "isi-sakit"), ("healthy", "isi-sehat")]:
+        persen = probs[nama] * 100
+        bar += (
+            f'<div class="bar"><div class="bar-atas"><span>{INFO[nama]["judul"]}</span>'
+            f"<span>{persen:.1f}%</span></div>"
+            f'<div class="track"><div class="isi-bar {kelas_bar}" '
+            f'style="width: {persen:.1f}%"></div></div></div>'
+        )
+    return (
+        f"{peringatan}"
+        f'<div class="hasil {kelas}"><span class="lencana">{lencana}</span>'
+        f'<div class="nama-hasil">{info["judul"]}</div>'
+        f'<div class="keyakinan">Keyakinan model <b>{probs[pred] * 100:.1f}%</b></div>'
+        f'<p class="saran">{info["saran"]}</p></div>{bar}'
+    )
 
 
 def tampilkan_welcome(st):
+    st.markdown(html_bilah_atas(), unsafe_allow_html=True)
+
     with st.container(key="hero"):
-        kiri, kanan = st.columns([2, 1])
+        kiri, kanan = st.columns([3, 2], vertical_alignment="center")
         with kiri:
             st.markdown(
                 """
-                <div class="eyebrow">Aplikasi Kerja Praktek · ITB STIKOM Bali</div>
-                <h1>Deteksi Bercak Daun Bakteri pada Daun Cabai</h1>
-                <p class="naskah">Cukup dari satu foto daun.</p>
-                <p class="isi">Aplikasi ini memprediksi apakah sehelai daun cabai
-                sehat atau terinfeksi bacterial spot, memakai model
-                MobileNetV3-Small dengan Coordinate Attention.</p>
+                <div class="eyebrow">MobileNetV3-Small + Coordinate Attention</div>
+                <h1>Deteksi bercak daun bakteri, <em>cukup dari satu foto.</em></h1>
+                <p class="hero-sub">Unggah foto sehelai daun cabai. Aplikasi memprediksi
+                apakah daun sehat atau terinfeksi bacterial spot, lengkap dengan
+                peta Grad-CAM yang menunjukkan dasar keputusannya.</p>
                 """,
                 unsafe_allow_html=True,
             )
-            if st.button("Mulai Deteksi", type="primary"):
+            if st.button("Mulai Deteksi", type="primary", key="mulai_atas"):
                 st.session_state.mulai = True
                 st.rerun()
         with kanan:
-            st.markdown(
-                f'<div class="kartu-gradien">{MARKA_SVG}</div>',
-                unsafe_allow_html=True,
-            )
+            st.markdown(f'<div class="hero-art">{DAUN_SVG}</div>', unsafe_allow_html=True)
+
+    st.markdown(
+        '<div class="stat-grid">'
+        '<div class="stat"><b>99,73%</b><span>Akurasi pada data uji</span></div>'
+        '<div class="stat"><b>2.475</b><span>Citra daun dari PlantVillage</span></div>'
+        '<div class="stat"><b>2 kelas</b><span>Sehat dan bacterial spot</span></div>'
+        "</div>",
+        unsafe_allow_html=True,
+    )
 
     fitur = [
-        ("Deteksi dari Foto",
+        ("01", "Deteksi dari foto",
          "Unggah foto daun atau ambil dari kamera. Hasilnya label sehat "
          "atau bacterial spot beserta tingkat keyakinan model."),
-        ("Peta Grad-CAM", "Lihat bagian daun yang menjadi dasar prediksi"),
-        ("Unduh Hasil PDF", "Simpan hasil deteksi sebagai dokumen laporan"),
+        ("02", "Peta Grad-CAM",
+         "Lihat bagian daun yang menjadi dasar prediksi model, ditandai "
+         "dengan warna pada foto."),
+        ("03", "Unduh hasil PDF",
+         "Simpan hasil deteksi sebagai dokumen laporan lengkap dengan "
+         "foto, peta Grad-CAM, dan saran."),
     ]
     kartu = "".join(
-        f'<div class="fitur"><div class="judul-fitur">{judul}</div>'
-        f"<small>{isi}</small></div>"
-        for judul, isi in fitur
+        f'<div class="fitur"><div class="no-fitur">{no}</div>'
+        f'<div class="judul-fitur">{judul}</div><small>{isi}</small></div>'
+        for no, judul, isi in fitur
     )
     st.markdown(
-        f'<h2 class="judul-bab">Tiga Hal yang Bisa Dilakukan</h2>'
+        '<div class="bab-label">Fitur</div>'
+        '<h2 class="judul-bab">Tiga hal yang bisa dilakukan</h2>'
         f'<div class="grid-fitur">{kartu}</div>',
         unsafe_allow_html=True,
     )
 
-    langkah_html = "".join(
-        f'<div class="langkah{" langkah-awal" if i == 1 else ""}">'
-        f'<div class="no">{i}</div><p>{teks}</p></div>'
-        for i, teks in enumerate(LANGKAH_TUTORIAL, start=1)
-    )
     st.markdown(
-        f'<div class="bab-langkah"><h2 class="judul-bab" style="margin-top: 0">'
-        f'Cara <span class="naskah-inline">Penggunaan</span></h2>'
-        f"{langkah_html}</div>",
+        '<div class="bab-label">Panduan</div>'
+        '<h2 class="judul-bab">Cara penggunaan</h2>' + html_langkah(),
         unsafe_allow_html=True,
     )
 
-    st.write("")
-    st.caption(
-        "Kerja Praktek ITB STIKOM Bali · Akurasi model pada data uji 99,73%"
+    with st.container(key="cta"):
+        st.markdown(
+            "<h2>Siap mencoba?</h2><p class=\"cta-teks\">Siapkan satu foto daun cabai, "
+            "hasilnya keluar dalam hitungan detik.</p>",
+            unsafe_allow_html=True,
+        )
+        _, tengah, _ = st.columns([2, 1.2, 2])
+        with tengah:
+            if st.button("Mulai Deteksi", type="primary", key="mulai_bawah",
+                         width="stretch"):
+                st.session_state.mulai = True
+                st.rerun()
+
+    st.markdown(
+        '<div class="catatan-kaki">Kerja Praktek ITB STIKOM Bali · '
+        "Hasil adalah prediksi model, bukan diagnosis pasti.</div>",
+        unsafe_allow_html=True,
     )
 
 
@@ -451,19 +665,23 @@ def main():
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         return load_model(device=device), device
 
-    atas = st.columns([5, 1])
+    atas = st.columns([6, 1.4], vertical_alignment="center")
     with atas[0]:
-        st.title("Deteksi Penyakit Bercak Daun Bakteri")
+        st.markdown(html_bilah_atas(dengan_tag=False), unsafe_allow_html=True)
     with atas[1]:
-        st.write("")
-        if st.button("Beranda"):
+        if st.button("← Beranda", width="stretch"):
             st.session_state.mulai = False
             st.rerun()
 
-    with st.expander("Cara Penggunaan"):
-        tampilkan_tutorial(st)
+    st.markdown(
+        '<h1 class="judul-halaman">Periksa daun cabai</h1>'
+        '<p class="sub-halaman">Pilih foto, klik Deteksi, lalu baca hasilnya.</p>',
+        unsafe_allow_html=True,
+    )
+    tempat_stepper = st.empty()
 
-    st.divider()
+    with st.expander("Cara penggunaan"):
+        tampilkan_tutorial(st)
 
     try:
         model, device = _model()
@@ -471,89 +689,115 @@ def main():
         st.error(str(e))
         return
 
-    kol_kiri, kol_kanan = st.columns(2)
+    st.write("")
+    kol_kiri, kol_kanan = st.columns(2, gap="medium")
 
     gambar = None
     gambar_bytes = None
+    berkas = None
     with kol_kiri:
-        st.subheader("Foto Daun")
-        sumber = st.radio("Sumber gambar", ["Upload file", "Kamera"], horizontal=True)
-        if sumber == "Upload file":
-            berkas = st.file_uploader("Pilih foto daun", type=["jpg", "jpeg", "png"])
-            if berkas is not None:
-                gambar_bytes = berkas.getvalue()
-                gambar = Image.open(io.BytesIO(gambar_bytes))
-        else:
-            foto = st.camera_input("Ambil foto daun")
-            if foto is not None:
-                gambar_bytes = foto.getvalue()
-                gambar = Image.open(io.BytesIO(gambar_bytes))
+        with st.container(key="panel-input"):
+            st.markdown(
+                '<div class="judul-panel"><span class="bulat">1</span>Foto daun</div>',
+                unsafe_allow_html=True,
+            )
+            pilihan = ["Upload file", "Kamera"]
+            if hasattr(st, "segmented_control"):
+                sumber = st.segmented_control(
+                    "Sumber gambar", pilihan, default=pilihan[0],
+                    label_visibility="collapsed",
+                ) or pilihan[0]
+            else:
+                sumber = st.radio("Sumber gambar", pilihan, horizontal=True)
+            if sumber == "Upload file":
+                berkas = st.file_uploader(
+                    "Pilih foto daun", type=["jpg", "jpeg", "png"],
+                    label_visibility="collapsed",
+                )
+                if berkas is not None:
+                    gambar_bytes = berkas.getvalue()
+                    gambar = Image.open(io.BytesIO(gambar_bytes))
+            else:
+                foto = st.camera_input("Ambil foto daun", label_visibility="collapsed")
+                if foto is not None:
+                    gambar_bytes = foto.getvalue()
+                    gambar = Image.open(io.BytesIO(gambar_bytes))
 
-        if gambar is not None:
-            if st.button("Deteksi", type="primary", width="stretch"):
-                with st.spinner("Menganalisis foto..."):
-                    pred, probs = predict_image(model, gambar, device)
-                    overlay = gradcam_overlay(
-                        model, gambar, device, CLASS_NAMES.index(pred)
-                    )
-                    nama_file = (
-                        berkas.name if sumber == "Upload file"
-                        else "Foto dari kamera"
-                    )
-                    pdf_bytes = buat_pdf(gambar, overlay, pred, probs, nama_file)
-                buf = io.BytesIO()
-                overlay.save(buf, format="PNG")
-                st.session_state.hasil = {
-                    "gambar_id": hash(gambar_bytes),
-                    "pred": pred,
-                    "probs": probs,
-                    "overlay_png": buf.getvalue(),
-                    "pdf": pdf_bytes,
-                }
+            if gambar is not None:
+                if sumber == "Upload file":
+                    st.image(gambar, width="stretch")
+                nama_tampil = berkas.name if sumber == "Upload file" else "Foto dari kamera"
+                st.markdown(
+                    f'<div class="info-berkas"><span>{nama_tampil}</span>'
+                    f"<span>{gambar.width} × {gambar.height} px</span></div>",
+                    unsafe_allow_html=True,
+                )
+                if st.button("Deteksi", type="primary", width="stretch"):
+                    with st.spinner("Menganalisis foto..."):
+                        pred, probs = predict_image(model, gambar, device)
+                        overlay = gradcam_overlay(
+                            model, gambar, device, CLASS_NAMES.index(pred)
+                        )
+                        nama_file = (
+                            berkas.name if sumber == "Upload file"
+                            else "Foto dari kamera"
+                        )
+                        pdf_bytes = buat_pdf(gambar, overlay, pred, probs, nama_file)
+                    buf = io.BytesIO()
+                    overlay.save(buf, format="PNG")
+                    st.session_state.hasil = {
+                        "gambar_id": hash(gambar_bytes),
+                        "pred": pred,
+                        "probs": probs,
+                        "overlay_png": buf.getvalue(),
+                        "pdf": pdf_bytes,
+                    }
+
+    hasil = st.session_state.get("hasil")
+    hasil_valid = (
+        gambar is not None and hasil is not None
+        and hasil["gambar_id"] == hash(gambar_bytes)
+    )
 
     with kol_kanan:
-        st.subheader("Hasil Deteksi")
-        hasil = st.session_state.get("hasil")
-        if gambar is None or hasil is None or hasil["gambar_id"] != hash(gambar_bytes):
-            st.info(
-                "Hasil deteksi tampil di sini setelah foto dipilih "
-                "dan tombol Deteksi diklik."
+        with st.container(key="panel-hasil"):
+            st.markdown(
+                '<div class="judul-panel"><span class="bulat">2</span>Hasil deteksi</div>',
+                unsafe_allow_html=True,
             )
-        else:
-            pred = hasil["pred"]
-            probs = hasil["probs"]
-            info = INFO[pred]
-            if probs[pred] < AMBANG_KEYAKINAN:
-                st.warning(
-                    "Keyakinan model rendah, hasil di bawah belum bisa dipegang. "
-                    "Coba foto satu helai daun dengan background polos dan "
-                    "pencahayaan yang cukup."
+            if not hasil_valid:
+                st.markdown(
+                    f'<div class="kosong">{IKON_KOSONG_SVG}<b>Belum ada hasil</b>'
+                    "Hasil deteksi tampil di sini setelah foto dipilih "
+                    "dan tombol Deteksi diklik.</div>",
+                    unsafe_allow_html=True,
                 )
-            banner = f"Hasil: {info['judul']} · keyakinan {probs[pred] * 100:.1f}%"
-            if pred == "healthy":
-                st.success(banner)
             else:
-                st.error(banner)
-            st.write(info["saran"])
-            for name in ["bacterial_spot", "healthy"]:
-                st.write(f"{INFO[name]['judul']}: {probs[name] * 100:.1f}%")
-                st.progress(probs[name])
+                st.markdown(
+                    html_hasil(hasil["pred"], hasil["probs"]),
+                    unsafe_allow_html=True,
+                )
 
-    # Foto asli dan peta Grad-CAM ditampilkan berdampingan pada baris
-    # tersendiri supaya ukurannya sama dan posisinya sejajar.
-    if gambar is not None:
-        kol_foto, kol_cam = st.columns(2)
-        with kol_foto:
-            st.image(gambar, caption="Foto yang dipakai", width="stretch")
-        with kol_cam:
-            if hasil is not None and hasil["gambar_id"] == hash(gambar_bytes):
+    # Peta Grad-CAM dan tombol unduh, tampil di baris tersendiri.
+    if hasil_valid:
+        with st.container(key="panel-cam"):
+            kol_gambar, kol_teks = st.columns(2, gap="large", vertical_alignment="center")
+            with kol_gambar:
                 st.image(
                     Image.open(io.BytesIO(hasil["overlay_png"])),
-                    caption=(
-                        "Peta Grad-CAM. Warna merah menunjukkan bagian daun "
-                        "yang paling berpengaruh pada prediksi model."
-                    ),
+                    caption="Overlay Grad-CAM pada foto yang dipakai",
                     width="stretch",
+                )
+            with kol_teks:
+                st.markdown(
+                    "<h3>Peta Grad-CAM</h3>"
+                    "<p class=\"teks-cam\">Warna menunjukkan bagian daun yang paling berpengaruh pada "
+                    "prediksi model. Peta ini adalah fokus model, bukan batas pasti "
+                    "bercak penyakit.</p>"
+                    '<div class="legenda"></div>'
+                    '<div class="legenda-label"><span>Kurang berpengaruh</span>'
+                    "<span>Paling berpengaruh</span></div>",
+                    unsafe_allow_html=True,
                 )
                 nama_pdf = f"hasil-deteksi-{datetime.now():%Y%m%d-%H%M}.pdf"
                 st.download_button(
@@ -563,6 +807,16 @@ def main():
                     mime="application/pdf",
                     width="stretch",
                 )
+
+    tahap = 3 if hasil_valid else (2 if gambar is not None else 1)
+    tempat_stepper.markdown(html_stepper(tahap), unsafe_allow_html=True)
+
+    st.markdown(
+        '<div class="catatan-kaki">Hasil adalah prediksi model, bukan diagnosis '
+        "pasti. Model hanya membedakan daun sehat dan bacterial spot. "
+        "Konsultasikan dengan penyuluh pertanian untuk kepastian.</div>",
+        unsafe_allow_html=True,
+    )
 
 
 if __name__ == "__main__":

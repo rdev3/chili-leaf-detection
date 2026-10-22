@@ -1,8 +1,9 @@
-# Tema mengikuti DESIGN.md (Designjoy): off-white hangat, hitam,
-# CTA oranye, Figtree.
+# Warna dasar tema. Gaya lengkap (kartu, hero, hasil) ada di
+# app/streamlit_app.py pada konstanta GAYA.
 [theme]
-primaryColor = "#EA580C"
-backgroundColor = "#EBE8E4"
+base = "light"
+primaryColor = "#166A3E"
+backgroundColor = "#F5F2EA"
 secondaryBackgroundColor = "#FFFFFF"
-textColor = "#000000"
+textColor = "#14201A"
 font = "sans serif"
