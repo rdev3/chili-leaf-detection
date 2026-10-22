@@ -59,56 +59,55 @@ BULAN = [
 # CSS di sini untuk tipografi, chrome bawaan Streamlit, dan bab tampilan.
 GAYA = """
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=gambarino@400&f[]=switzer@400,600&display=swap");
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
-.stApp {font-family: "Figtree", "Segoe UI", sans-serif;}
-.stApp h1 {font-weight: 600;}
+.stApp {font-family: "Switzer", "Segoe UI", sans-serif;}
+h1, h2, h3 {font-family: "Gambarino", Georgia, serif; font-weight: 400; letter-spacing: -0.01em;}
 .st-key-hero {
-    background: #6437FF; border-radius: 20px; padding: 2rem 1.8rem 1.4rem 1.8rem;
+    background: linear-gradient(180deg, #5AC8FA 0%, #AEE6FD 55%, #FFFFFF 100%);
+    border-radius: 24px; padding: 2.6rem 2rem 2rem 2rem; text-align: center;
 }
-.st-key-hero h1 {
-    color: #FFFFFF; font-size: 3.1rem; font-weight: 400;
-    line-height: 1.1; margin: 0 0 1rem 0;
-}
-.st-key-hero p {color: #FFFFFF; font-size: 1.15rem; line-height: 1.5; margin: 0;}
-.panel-putih {background: #FFFFFF; border-radius: 20px; padding: 1.8rem 1.6rem; margin-top: 1.6rem;}
-.panel-putih h2 {color: #000000; font-size: 1.6rem; font-weight: 600; margin: 0 0 1.2rem 0;}
-.grid-fitur {display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem;}
+.st-key-hero h1 {font-size: 3.3rem; line-height: 1.1; letter-spacing: -0.02em; margin: 0.6rem 0 1rem 0;}
+.st-key-hero p {font-size: 1.2rem; line-height: 1.5; max-width: 560px; margin: 0 auto;}
+.ilustrasi {width: 230px; margin: 0 auto;}
+.judul-bab {font-size: 2.3rem; text-align: center; margin: 3rem 0 1.4rem 0;}
+.grid-fitur {display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;}
 @media (max-width: 640px) {.grid-fitur {grid-template-columns: 1fr;}}
-.fitur {border-top: 2px solid #6437FF; padding-top: 0.8rem;}
-.judul-fitur {color: #6437FF; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.35rem;}
-.fitur small {display: block; color: #000000; font-size: 0.925rem; line-height: 1.5;}
-.pita-ungu {background: #6437FF; border-radius: 20px; padding: 1.6rem; margin-top: 1.6rem;}
-.pita-ungu h2 {color: #FFFFFF; font-size: 1.6rem; font-weight: 600; margin: 0 0 1.1rem 0;}
-.kartu-langkah {background: #FFFFFF; border-radius: 16px; padding: 0.6rem 1.3rem;}
-.langkah {display: flex; gap: 1rem; padding: 0.65rem 0; border-top: 1px solid #E3E3E3;}
+.fitur {background: #FFFFFF; border: 1px solid #E5E5E5; border-radius: 16px; padding: 1.5rem;}
+.judul-fitur {font-size: 1.05rem; margin-bottom: 0.4rem;}
+.fitur small {display: block; color: #6B6B6B; font-size: 0.875rem; line-height: 1.5;}
+.panel-surface {background: #F5F5F7; border-radius: 24px; padding: 1.8rem 1.6rem; margin-top: 3rem;}
+.panel-surface h2 {font-size: 2rem; text-align: center; margin: 0 0 1.2rem 0;}
+.kartu-langkah {background: #FFFFFF; border: 1px solid #E5E5E5; border-radius: 16px; padding: 0.6rem 1.3rem;}
+.langkah {display: flex; gap: 1rem; padding: 0.65rem 0; border-top: 1px solid #E5E5E5;}
 .langkah-awal {border-top: none;}
-.langkah .no {font-size: 1.5rem; font-weight: 700; color: #6437FF; line-height: 1.15; min-width: 2.2rem;}
-.langkah p {margin: 0; color: #000000; font-size: 0.95rem; line-height: 1.55;}
-button[kind="primary"] {
-    background-color: #FFFF00; color: #000000; border: none;
-    border-radius: 999px; font-family: Arial, sans-serif; font-weight: 600;
+.langkah .no {
+    font-family: "Gambarino", Georgia, serif; font-size: 1.6rem;
+    line-height: 1.2; min-width: 2.2rem;
 }
-button[kind="primary"]:hover {background-color: #E6E600; color: #000000;}
+.langkah p {margin: 0; font-size: 0.95rem; line-height: 1.6;}
+button[kind="primary"] {
+    background-color: #0066CC; color: #FFFFFF; border: none; border-radius: 999px;
+}
+button[kind="primary"]:hover {background-color: #0A84FF; color: #FFFFFF;}
 button[kind="primary"]:focus-visible {
-    box-shadow: 0 0 0 3px rgba(255, 255, 0, 0.55); outline: none;
+    box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.45); outline: none;
 }
 </style>
 """
 
-# Marka daun wireframe putih, karya visual di panel hero mengikuti
-# bahasa geometris triangulasi pada DESIGN.md.
+# Ilustrasi pesawat kertas untuk hero, digambar mengikuti motif
+# pesawat kertas pada DESIGN.md.
 MARKA_SVG = """
-<svg viewBox="0 0 320 320" width="100%" xmlns="http://www.w3.org/2000/svg">
-  <g stroke="#FFFFFF" stroke-width="2.5" stroke-linejoin="round" fill="none">
-    <polygon points="104,232 150,104 248,52" fill="rgba(255,255,255,0.10)" stroke="none"/>
-    <polygon points="150,174 232,188 168,240" fill="rgba(255,255,255,0.07)" stroke="none"/>
-    <polygon points="104,232 112,168 150,174" fill="rgba(255,255,255,0.16)" stroke="none"/>
-    <path d="M70,268 L104,232 L112,168 L150,104 L248,52 L268,118 L232,188 L168,240 Z"/>
-    <path d="M104,232 L150,174 L193,120 L248,52"/>
-    <path d="M112,168 L150,174 M150,104 L150,174 M150,104 L193,120 M268,118 L193,120 M232,188 L150,174 M168,240 L150,174 M112,168 L168,240"/>
-    <path d="M70,268 L104,232"/>
+<svg viewBox="0 0 240 140" width="100%" xmlns="http://www.w3.org/2000/svg">
+  <path d="M8,116 C64,116 92,70 148,54 C178,45 206,42 224,34" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-dasharray="1 9" stroke-linecap="round" opacity="0.9"/>
+  <ellipse cx="44" cy="112" rx="27" ry="10" fill="#FFFFFF" opacity="0.75"/>
+  <ellipse cx="72" cy="104" rx="18" ry="8" fill="#FFFFFF" opacity="0.75"/>
+  <g stroke="rgba(10,132,255,0.35)" stroke-width="1.5" stroke-linejoin="round">
+    <polygon points="150,28 228,56 170,70" fill="#FFFFFF"/>
+    <polygon points="150,28 170,70 160,50" fill="#EAF7FF"/>
+    <polygon points="160,50 170,70 164,88" fill="#CDEBFF"/>
   </g>
 </svg>
 """
@@ -356,22 +355,23 @@ def tampilkan_tutorial(st):
 
 def tampilkan_welcome(st):
     with st.container(key="hero"):
-        kiri, kanan = st.columns([3, 2])
-        with kiri:
-            st.markdown(
-                """
-                <h1>Deteksi Bercak Daun Bakteri pada Daun Cabai</h1>
-                <p>Aplikasi ini memprediksi apakah sehelai daun cabai sehat atau
-                terinfeksi bacterial spot dari sebuah foto, memakai model
-                MobileNetV3-Small dengan Coordinate Attention.</p>
-                """,
-                unsafe_allow_html=True,
-            )
+        st.markdown(
+            f'<div class="ilustrasi">{MARKA_SVG}</div>', unsafe_allow_html=True
+        )
+        st.markdown(
+            """
+            <h1>Deteksi Bercak Daun Bakteri pada Daun Cabai</h1>
+            <p>Aplikasi ini memprediksi apakah sehelai daun cabai sehat atau
+            terinfeksi bacterial spot dari sebuah foto, memakai model
+            MobileNetV3-Small dengan Coordinate Attention.</p>
+            """,
+            unsafe_allow_html=True,
+        )
+        _, tengah, _ = st.columns([2, 3, 2])
+        with tengah:
             if st.button("Mulai Deteksi", type="primary", width="stretch"):
                 st.session_state.mulai = True
                 st.rerun()
-        with kanan:
-            st.markdown(MARKA_SVG, unsafe_allow_html=True)
 
     fitur = [
         ("Deteksi dari Foto",
@@ -386,8 +386,8 @@ def tampilkan_welcome(st):
         for judul, isi in fitur
     )
     st.markdown(
-        f'<div class="panel-putih"><h2>Tiga Hal yang Bisa Dilakukan</h2>'
-        f'<div class="grid-fitur">{kartu}</div></div>',
+        f'<h2 class="judul-bab">Tiga Hal yang Bisa Dilakukan</h2>'
+        f'<div class="grid-fitur">{kartu}</div>',
         unsafe_allow_html=True,
     )
 
@@ -397,7 +397,7 @@ def tampilkan_welcome(st):
         for i, teks in enumerate(LANGKAH_TUTORIAL, start=1)
     )
     st.markdown(
-        f'<div class="pita-ungu"><h2>Cara Penggunaan</h2>'
+        f'<div class="panel-surface"><h2>Cara Penggunaan</h2>'
         f'<div class="kartu-langkah">{langkah_html}</div></div>',
         unsafe_allow_html=True,
     )

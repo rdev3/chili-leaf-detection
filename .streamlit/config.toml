@@ -1,8 +1,8 @@
-# Tema mengikuti DESIGN.md (cavalry.studio): kanvas hitam, bidang ungu,
-# panel putih, kuning khusus aksi.
+# Tema mengikuti DESIGN.md (Deta Surf): kanvas putih, serif Gambarino,
+# sans Switzer, satu aksen biru.
 [theme]
-primaryColor = "#FFFF00"
-backgroundColor = "#000000"
-secondaryBackgroundColor = "#262626"
-textColor = "#FFFFFF"
+primaryColor = "#0A84FF"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F5F5F7"
+textColor = "#000000"
 font = "sans serif"
