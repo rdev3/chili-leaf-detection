@@ -133,6 +133,7 @@ Memakai checkpoint CA terbaik
 - v23: DESIGN.md diganti ke Cavalry, UI di-rework: tema charcoal terkunci, hero split dengan marka daun wireframe, panel fitur ungu, papan Cara Penggunaan, tombol aksi hijau neon
 - v24: DESIGN.md diganti ke cavalry.studio, UI di-rework lagi: kanvas hitam, panel hero ungu, panel fitur putih, kartu langkah putih di atas pita ungu, tombol aksi kuning
 - v25: DESIGN.md diganti ke Deta Surf, UI di-rework lagi: kanvas putih, hero gradien langit dengan ilustrasi pesawat kertas, serif Gambarino dan sans Switzer dari Fontshare, kartu fitur putih berbatas tipis, tombol pill biru
+- v26: DESIGN.md diganti ke Designjoy, UI di-rework lagi: panel hero hitam dengan kartu gradien oranye-pink-ungu berisi cluster smiley, halaman off-white hangat, kartu fitur putih berbatas dotted, CTA pill oranye teks hitam, Figtree
 
 ## Troubleshooting
 

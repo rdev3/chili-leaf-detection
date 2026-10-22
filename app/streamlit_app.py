@@ -59,55 +59,71 @@ BULAN = [
 # CSS di sini untuk tipografi, chrome bawaan Streamlit, dan bab tampilan.
 GAYA = """
 <style>
-@import url("https://api.fontshare.com/v2/css?f[]=gambarino@400&f[]=switzer@400,600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&family=Playfair+Display:ital,wght@1,500&display=swap");
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
-.stApp {font-family: "Switzer", "Segoe UI", sans-serif;}
-h1, h2, h3 {font-family: "Gambarino", Georgia, serif; font-weight: 400; letter-spacing: -0.01em;}
-.st-key-hero {
-    background: linear-gradient(180deg, #5AC8FA 0%, #AEE6FD 55%, #FFFFFF 100%);
-    border-radius: 24px; padding: 2.6rem 2rem 2rem 2rem; text-align: center;
+.stApp {font-family: "Figtree", "Segoe UI", sans-serif;}
+h1, h2, h3 {font-weight: 700; letter-spacing: -0.01em;}
+.st-key-hero {background: #000000; border-radius: 24px; padding: 2.4rem 2rem;}
+.eyebrow {
+    font-family: ui-monospace, "Courier New", monospace; font-size: 0.75rem;
+    letter-spacing: 0.08em; text-transform: uppercase; color: #FBBF24; margin-bottom: 1rem;
 }
-.st-key-hero h1 {font-size: 3.3rem; line-height: 1.1; letter-spacing: -0.02em; margin: 0.6rem 0 1rem 0;}
-.st-key-hero p {font-size: 1.2rem; line-height: 1.5; max-width: 560px; margin: 0 auto;}
-.ilustrasi {width: 230px; margin: 0 auto;}
-.judul-bab {font-size: 2.3rem; text-align: center; margin: 3rem 0 1.4rem 0;}
-.grid-fitur {display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;}
+.st-key-hero h1 {color: #FFFFFF; font-size: 3.1rem; line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 0.6rem 0;}
+.naskah {
+    font-family: "Playfair Display", Georgia, serif; font-style: italic; font-weight: 500;
+    font-size: 1.9rem; color: #FFFFFF; margin: 0 0 1rem 0;
+}
+.st-key-hero .isi {color: #9CA3AF; font-size: 0.95rem; line-height: 1.55; max-width: 480px; margin: 0;}
+.kartu-gradien {
+    background: linear-gradient(135deg, #F97316 0%, #EC4899 55%, #9333EA 100%);
+    border-radius: 16px; padding: 1.1rem 0.8rem; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+.judul-bab {font-size: 2.2rem; margin: 3rem 0 0.4rem 0;}
+.naskah-inline {font-family: "Playfair Display", Georgia, serif; font-style: italic; font-weight: 500;}
+.grid-fitur {display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1.4rem;}
 @media (max-width: 640px) {.grid-fitur {grid-template-columns: 1fr;}}
-.fitur {background: #FFFFFF; border: 1px solid #E5E5E5; border-radius: 16px; padding: 1.5rem;}
-.judul-fitur {font-size: 1.05rem; margin-bottom: 0.4rem;}
-.fitur small {display: block; color: #6B6B6B; font-size: 0.875rem; line-height: 1.5;}
-.panel-surface {background: #F5F5F7; border-radius: 24px; padding: 1.8rem 1.6rem; margin-top: 3rem;}
-.panel-surface h2 {font-size: 2rem; text-align: center; margin: 0 0 1.2rem 0;}
-.kartu-langkah {background: #FFFFFF; border: 1px solid #E5E5E5; border-radius: 16px; padding: 0.6rem 1.3rem;}
-.langkah {display: flex; gap: 1rem; padding: 0.65rem 0; border-top: 1px solid #E5E5E5;}
+.fitur {background: #FFFFFF; border: 1.5px dotted #9CA3AF; border-radius: 16px; padding: 1.5rem;}
+.judul-fitur {font-weight: 700; font-size: 1.05rem; margin-bottom: 0.4rem;}
+.fitur small {display: block; font-size: 0.875rem; line-height: 1.5;}
+.bab-langkah {margin-top: 3rem;}
+.langkah {display: flex; gap: 1rem; padding: 0.8rem 0; border-top: 1px solid rgba(156, 163, 175, 0.55);}
 .langkah-awal {border-top: none;}
-.langkah .no {
-    font-family: "Gambarino", Georgia, serif; font-size: 1.6rem;
-    line-height: 1.2; min-width: 2.2rem;
-}
-.langkah p {margin: 0; font-size: 0.95rem; line-height: 1.6;}
+.langkah .no {font-size: 1.4rem; font-weight: 700; line-height: 1.2; min-width: 2.2rem;}
+.langkah p {margin: 0; font-size: 0.95rem; line-height: 1.55;}
 button[kind="primary"] {
-    background-color: #0066CC; color: #FFFFFF; border: none; border-radius: 999px;
+    background-color: #F97316; color: #000000; border: none;
+    border-radius: 999px; font-weight: 700;
 }
-button[kind="primary"]:hover {background-color: #0A84FF; color: #FFFFFF;}
+button[kind="primary"]:hover {background-color: #F97316; color: #000000; filter: brightness(0.93);}
 button[kind="primary"]:focus-visible {
-    box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.45); outline: none;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.5); outline: none;
 }
 </style>
 """
 
-# Ilustrasi pesawat kertas untuk hero, digambar mengikuti motif
-# pesawat kertas pada DESIGN.md.
+# Cluster smiley warna-warni, motif utama pada DESIGN.md, digambar
+# sebagai lingkaran datar dengan wajah garis sederhana.
 MARKA_SVG = """
-<svg viewBox="0 0 240 140" width="100%" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8,116 C64,116 92,70 148,54 C178,45 206,42 224,34" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-dasharray="1 9" stroke-linecap="round" opacity="0.9"/>
-  <ellipse cx="44" cy="112" rx="27" ry="10" fill="#FFFFFF" opacity="0.75"/>
-  <ellipse cx="72" cy="104" rx="18" ry="8" fill="#FFFFFF" opacity="0.75"/>
-  <g stroke="rgba(10,132,255,0.35)" stroke-width="1.5" stroke-linejoin="round">
-    <polygon points="150,28 228,56 170,70" fill="#FFFFFF"/>
-    <polygon points="150,28 170,70 160,50" fill="#EAF7FF"/>
-    <polygon points="160,50 170,70 164,88" fill="#CDEBFF"/>
+<svg viewBox="0 0 260 190" width="100%" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="44" cy="40" r="26" fill="#FBBF24"/>
+  <circle cx="178" cy="66" r="40" fill="#2563EB"/>
+  <circle cx="200" cy="132" r="34" fill="#EC4899"/>
+  <circle cx="130" cy="148" r="30" fill="#22C55E"/>
+  <circle cx="88" cy="92" r="52" fill="#F97316"/>
+  <g fill="#111111">
+    <circle cx="36" cy="36" r="3.4"/><circle cx="52" cy="36" r="3.4"/>
+    <circle cx="166" cy="60" r="4.4"/><circle cx="190" cy="60" r="4.4"/>
+    <circle cx="189" cy="127" r="3.8"/><circle cx="211" cy="127" r="3.8"/>
+    <circle cx="120" cy="144" r="3.4"/><circle cx="140" cy="144" r="3.4"/>
+    <circle cx="70" cy="84" r="5.6"/><circle cx="106" cy="84" r="5.6"/>
+  </g>
+  <g fill="none" stroke="#111111" stroke-linecap="round">
+    <path d="M36,46 Q44,53 52,46" stroke-width="3"/>
+    <path d="M165,72 Q178,83 191,72" stroke-width="3.6"/>
+    <path d="M189,137 Q200,145 211,137" stroke-width="3.2"/>
+    <path d="M120,154 Q130,161 140,154" stroke-width="3"/>
+    <path d="M69,98 Q88,114 107,98" stroke-width="4.6"/>
   </g>
 </svg>
 """
@@ -355,23 +371,27 @@ def tampilkan_tutorial(st):
 
 def tampilkan_welcome(st):
     with st.container(key="hero"):
-        st.markdown(
-            f'<div class="ilustrasi">{MARKA_SVG}</div>', unsafe_allow_html=True
-        )
-        st.markdown(
-            """
-            <h1>Deteksi Bercak Daun Bakteri pada Daun Cabai</h1>
-            <p>Aplikasi ini memprediksi apakah sehelai daun cabai sehat atau
-            terinfeksi bacterial spot dari sebuah foto, memakai model
-            MobileNetV3-Small dengan Coordinate Attention.</p>
-            """,
-            unsafe_allow_html=True,
-        )
-        _, tengah, _ = st.columns([2, 3, 2])
-        with tengah:
-            if st.button("Mulai Deteksi", type="primary", width="stretch"):
+        kiri, kanan = st.columns([2, 1])
+        with kiri:
+            st.markdown(
+                """
+                <div class="eyebrow">Aplikasi Kerja Praktek · ITB STIKOM Bali</div>
+                <h1>Deteksi Bercak Daun Bakteri pada Daun Cabai</h1>
+                <p class="naskah">Cukup dari satu foto daun.</p>
+                <p class="isi">Aplikasi ini memprediksi apakah sehelai daun cabai
+                sehat atau terinfeksi bacterial spot, memakai model
+                MobileNetV3-Small dengan Coordinate Attention.</p>
+                """,
+                unsafe_allow_html=True,
+            )
+            if st.button("Mulai Deteksi", type="primary"):
                 st.session_state.mulai = True
                 st.rerun()
+        with kanan:
+            st.markdown(
+                f'<div class="kartu-gradien">{MARKA_SVG}</div>',
+                unsafe_allow_html=True,
+            )
 
     fitur = [
         ("Deteksi dari Foto",
@@ -397,8 +417,9 @@ def tampilkan_welcome(st):
         for i, teks in enumerate(LANGKAH_TUTORIAL, start=1)
     )
     st.markdown(
-        f'<div class="panel-surface"><h2>Cara Penggunaan</h2>'
-        f'<div class="kartu-langkah">{langkah_html}</div></div>',
+        f'<div class="bab-langkah"><h2 class="judul-bab" style="margin-top: 0">'
+        f'Cara <span class="naskah-inline">Penggunaan</span></h2>'
+        f"{langkah_html}</div>",
         unsafe_allow_html=True,
     )
 

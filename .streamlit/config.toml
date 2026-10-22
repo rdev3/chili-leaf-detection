@@ -1,8 +1,8 @@
-# Tema mengikuti DESIGN.md (Deta Surf): kanvas putih, serif Gambarino,
-# sans Switzer, satu aksen biru.
+# Tema mengikuti DESIGN.md (Designjoy): off-white hangat, hitam,
+# CTA oranye, Figtree.
 [theme]
-primaryColor = "#0A84FF"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F5F5F7"
+primaryColor = "#EA580C"
+backgroundColor = "#EBE8E4"
+secondaryBackgroundColor = "#FFFFFF"
 textColor = "#000000"
 font = "sans serif"
