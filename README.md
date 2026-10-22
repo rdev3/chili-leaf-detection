@@ -127,6 +127,7 @@ Memakai checkpoint CA terbaik
 - v17: perapihan proporsi layout: foto asli dan Grad-CAM sejajar pada satu baris, tombol Deteksi di dekat kontrol unggah
 - v18: kartu fitur di layar pembuka ditata ulang: ikon dalam lencana lingkaran, hierarki judul dan deskripsi diperjelas
 - v19: audit komentar antislop-code (logika tidak berubah, terverifikasi AST) dan redesign UI mengikuti DESIGN.md: tema terang terkunci via .streamlit/config.toml, tombol aksi pill biru, kartu fitur tanpa emoji
+- v20: kartu fitur dibuat seragam (tiga kolom sama lebar) dan lebih menonjol: isian #F9F9F9, bingkai #E7E7E7, bayangan tipis
 
 ## Troubleshooting
 

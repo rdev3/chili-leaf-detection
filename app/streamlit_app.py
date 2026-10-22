@@ -65,14 +65,15 @@ h1 {letter-spacing: -0.035em;}
 .hero h1 {font-size: 3rem; font-weight: 500; line-height: 1.05;}
 .hero p {color: #757575; max-width: 620px; margin: 0 auto;}
 .fitur {
-    background: #FFFFFF; border: 1px solid #EEEEEE; border-radius: 16px;
+    background: #F9F9F9; border: 1px solid #E7E7E7; border-radius: 16px;
     padding: 1.25rem 1.1rem; height: 100%; color: #000000;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 .judul-fitur {
     font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em;
     margin-bottom: 0.35rem;
 }
-.fitur small {display: block; color: #757575; font-size: 0.875rem; line-height: 1.45;}
+.fitur small {display: block; color: #666666; font-size: 0.875rem; line-height: 1.45;}
 button[kind="primary"] {border-radius: 999px; border: none;}
 button[kind="primary"]:focus-visible {
     box-shadow: 0 0 0 3px rgba(43, 78, 255, 0.4); outline: none;
@@ -277,9 +278,7 @@ def tampilkan_welcome(st):
         unsafe_allow_html=True,
     )
 
-    # Kartu pertama lebih lebar karena deteksi adalah fungsi utama
-    # aplikasi; dua kartu lain hanya pendukungnya.
-    kol = st.columns([2, 1, 1])
+    kol = st.columns(3)
     fitur = [
         ("Deteksi dari Foto",
          "Unggah foto daun atau ambil dari kamera. Hasilnya label sehat "
@@ -307,7 +306,7 @@ def tampilkan_welcome(st):
         tampilkan_tutorial(st)
 
     st.caption(
-        "Made Ranggadeva Ratryananda Sandhi · ITB STIKOM Bali"
+        "Kerja Praktek ITB STIKOM Bali · Akurasi model pada data uji 99,73%"
     )
 
 
