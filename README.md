@@ -136,6 +136,7 @@ Memakai checkpoint CA terbaik
 - v26: DESIGN.md diganti ke Designjoy, UI di-rework lagi: panel hero hitam dengan kartu gradien oranye-pink-ungu berisi cluster smiley, halaman off-white hangat, kartu fitur putih berbatas dotted, CTA pill oranye teks hitam, Figtree
 - v27: revisi desain dari Claude diterapkan dan dirapikan: arah botani hijau-krem (Fraunces + Figtree), topbar, stepper, panel bernomor, kartu hasil custom; proporsi panel Grad-CAM diperbaiki (foto asli dan peta berdampingan ukuran sama), hero dikencangkan, lencana sehat digelapkan demi kontras
 - v28: proporsi panel hasil diperbaiki dari screenshot user: bar probabilitas dipindah ke dalam kartu hasil dengan garis pemisah, persen sangat kecil digambar sebagai ruas minimum 1,5% agar terbaca sebagai data, track lebih tipis, kotak keadaan kosong dipadatkan
+- v29: UI di-rework ke bahasa Designjoy dengan palet daun: hero hitam berisi kartu gradien hijau dengan cluster smiley rona daun, subjudul serif italic, kartu fitur dotted, halaman kertas hijau pucat, CTA hijau daun teks hitam, sisi sakit rona karat; struktur dan perbaikan proporsi v28 dipertahankan
 
 ## Troubleshooting
 

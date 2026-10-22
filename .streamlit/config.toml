@@ -1,9 +1,9 @@
-# Warna dasar tema. Gaya lengkap (kartu, hero, hasil) ada di
-# app/streamlit_app.py pada konstanta GAYA.
+# Tema mengikuti DESIGN.md (Designjoy, palet daun): kertas hijau pucat,
+# hijau daun untuk aksi, Figtree.
 [theme]
 base = "light"
-primaryColor = "#166A3E"
-backgroundColor = "#F5F2EA"
+primaryColor = "#2E7D32"
+backgroundColor = "#EDF3E2"
 secondaryBackgroundColor = "#FFFFFF"
-textColor = "#14201A"
+textColor = "#11150C"
 font = "sans serif"

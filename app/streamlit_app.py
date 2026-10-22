@@ -59,28 +59,28 @@ BULAN = [
 # (tipografi, kartu, hasil deteksi) ada di CSS berikut.
 GAYA = """
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&family=Playfair+Display:ital,wght@1,500&display=swap");
 
 :root {
-    --ink: #14201A;
-    --muted: #5B6B62;
-    --paper: #F5F2EA;
+    --ink: #11150C;
+    --muted: #5F7161;
+    --paper: #EDF3E2;
     --card: #FFFFFF;
-    --line: #E2DDCF;
-    --green: #166A3E;
-    --green-dark: #0E3B26;
-    --green-soft: #E8F5EC;
-    --lime: #C6F36B;
-    --chili: #D9381E;
-    --chili-soft: #FDECE8;
-    --ok: #1E8E4F;
+    --line: #D9E3C6;
+    --green: #2E7D32;
+    --green-aksi: #43A047;
+    --green-dark: #1E5B2A;
+    --green-soft: #E7F3DE;
+    --lime: #C1E35C;
+    --rust: #A63A1F;
+    --rust-soft: #F9E9DE;
 }
 
 #MainMenu, footer {visibility: hidden;}
 header[data-testid="stHeader"] {background: transparent;}
 .stApp {background: var(--paper); font-family: "Figtree", "Segoe UI", sans-serif; color: var(--ink);}
 .block-container {max-width: 1080px; padding-top: 1.6rem; padding-bottom: 4rem;}
-.stApp h1, .stApp h2, .stApp h3 {font-family: "Fraunces", Georgia, serif; font-weight: 600; letter-spacing: -0.01em; color: var(--ink);}
+h1, h2, h3 {font-family: "Figtree", "Segoe UI", sans-serif; font-weight: 700; letter-spacing: -0.01em; color: var(--ink);}
 
 /* ---------- Bilah atas ---------- */
 .topbar {display: flex; justify-content: space-between; align-items: center; padding: 0.2rem 0 1.2rem 0; gap: 1rem;}
@@ -90,14 +90,14 @@ header[data-testid="stHeader"] {background: transparent;}
 
 /* ---------- Tombol ---------- */
 .stApp [data-testid="stBaseButton-primary"], .stApp button[kind="primary"] {
-    background: var(--green); color: #FFFFFF; border: none; border-radius: 999px;
-    font-weight: 700; padding: 0.55rem 1.4rem; transition: transform .12s ease, filter .12s ease;
+    background: var(--green-aksi); color: #0B1206; border: none; border-radius: 999px;
+    font-weight: 700; padding: 0.55rem 1.4rem; transition: filter .12s ease;
 }
 .stApp [data-testid="stBaseButton-primary"]:hover, .stApp button[kind="primary"]:hover {
-    background: var(--green); color: #FFFFFF; filter: brightness(1.12); transform: translateY(-1px);
+    background: var(--green-aksi); color: #0B1206; filter: brightness(0.93);
 }
 .stApp [data-testid="stBaseButton-secondary"], .stApp [data-testid="stDownloadButton"] button {
-    background: var(--card); color: var(--ink); border: 1px solid #CFC9B6; border-radius: 999px;
+    background: var(--card); color: var(--ink); border: 1px solid #C4D2AC; border-radius: 999px;
     font-weight: 600; padding: 0.5rem 1.2rem;
 }
 .stApp [data-testid="stBaseButton-secondary"]:hover, .stApp [data-testid="stDownloadButton"] button:hover {
@@ -105,38 +105,35 @@ header[data-testid="stHeader"] {background: transparent;}
 }
 .stApp [data-testid="stDownloadButton"] button {background: var(--green-dark); color: #FFFFFF; border-color: var(--green-dark);}
 .stApp [data-testid="stDownloadButton"] button:hover {background: var(--green); color: #FFFFFF; border-color: var(--green);}
-.stApp button:focus-visible {outline: none; box-shadow: 0 0 0 3px rgba(22, 106, 62, 0.35);}
+.stApp button:focus-visible {outline: none; box-shadow: 0 0 0 3px rgba(67, 160, 71, 0.5);}
 
 /* ---------- Hero ---------- */
-.st-key-hero {
-    background: radial-gradient(120% 120% at 100% 0%, #1F6B45 0%, rgba(31,107,69,0) 55%), var(--green-dark);
-    border-radius: 28px; padding: 2.4rem 2.2rem; overflow: hidden;
-}
+.st-key-hero {background: #0C0F0A; border-radius: 24px; padding: 2.4rem 2.2rem;}
 .eyebrow {
-    display: inline-block; background: rgba(198, 243, 107, 0.14); color: var(--lime);
-    border-radius: 999px; padding: 0.3rem 0.85rem; font-size: 0.78rem; font-weight: 600;
-    letter-spacing: 0.04em; margin-bottom: 1.2rem;
+    font-family: ui-monospace, "Courier New", monospace; font-size: 0.75rem;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--lime); margin-bottom: 1rem;
 }
-.st-key-hero h1 {
-    color: #FFFFFF; font-size: clamp(2.1rem, 4.2vw, 3.3rem); line-height: 1.1;
-    margin: 0 0 1rem 0; padding: 0;
+.st-key-hero h1 {color: #FFFFFF; font-size: clamp(2.1rem, 4.2vw, 3.1rem); line-height: 1.1; margin: 0 0 0.6rem 0; padding: 0;}
+.naskah {
+    font-family: "Playfair Display", Georgia, serif; font-style: italic; font-weight: 500;
+    font-size: 1.9rem; color: #DCE9C8; margin: 0 0 1rem 0;
 }
-.st-key-hero h1 em {color: var(--lime); font-style: italic;}
-.hero-sub {color: #B9CBBF; font-size: 1.05rem; line-height: 1.6; max-width: 30rem; margin: 0 0 1.6rem 0;}
-.stApp .st-key-hero [data-testid="stBaseButton-primary"] {background: var(--lime); color: var(--green-dark); padding: 0.7rem 1.8rem; font-size: 1rem;}
-.stApp .st-key-hero [data-testid="stBaseButton-primary"]:hover {background: var(--lime); color: var(--green-dark);}
-.hero-art {display: flex; justify-content: center;}
-.hero-art svg {width: 100%; max-width: 248px; height: auto;}
+.hero-sub {color: #A9B8A4; font-size: 1rem; line-height: 1.6; max-width: 30rem; margin: 0;}
+.kartu-gradien {
+    background: linear-gradient(135deg, #1E5B2A 0%, #43A047 55%, #9CCC65 100%);
+    border-radius: 16px; padding: 1.1rem 0.8rem; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
 
 /* ---------- Angka ringkas, fitur, langkah ---------- */
 .stat-grid {display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.2rem;}
 .stat {background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 1.1rem 1.3rem;}
-.stat b {display: block; font-family: "Fraunces", Georgia, serif; font-size: 1.9rem; font-weight: 600; color: var(--green); line-height: 1.2;}
+.stat b {display: block; font-size: 1.9rem; font-weight: 700; color: var(--green-dark); line-height: 1.2;}
 .stat span {color: var(--muted); font-size: 0.88rem;}
 .bab-label {font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin: 3.2rem 0 0.4rem 0;}
 .judul-bab {font-size: 2rem; margin: 0 0 0.2rem 0; padding: 0;}
+.naskah-inline {font-family: "Playfair Display", Georgia, serif; font-style: italic; font-weight: 500;}
 .grid-fitur {display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.2rem;}
-.fitur {background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 1.5rem;}
+.fitur {background: var(--card); border: 1.5px dotted #93AC7E; border-radius: 16px; padding: 1.5rem;}
 .no-fitur {font-family: ui-monospace, "Courier New", monospace; font-size: 0.8rem; letter-spacing: 0.1em; color: var(--green); margin-bottom: 0.8rem;}
 .judul-fitur {font-weight: 700; font-size: 1.05rem; margin-bottom: 0.35rem;}
 .fitur small {display: block; font-size: 0.9rem; line-height: 1.55; color: var(--muted);}
@@ -144,7 +141,7 @@ header[data-testid="stHeader"] {background: transparent;}
 .langkah {display: flex; gap: 0.9rem; align-items: flex-start;}
 .langkah .no {
     flex: none; width: 2rem; height: 2rem; border-radius: 50%; background: var(--green-soft);
-    color: var(--green); font-weight: 700; font-size: 0.9rem; display: grid; place-items: center;
+    color: var(--green-dark); font-weight: 700; font-size: 0.9rem; display: grid; place-items: center;
 }
 .langkah p {margin: 0.2rem 0 0 0; font-size: 0.95rem; line-height: 1.55;}
 .st-key-cta {background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 2.2rem 1.5rem 1.8rem 1.5rem; margin-top: 3rem; text-align: center;}
@@ -153,11 +150,11 @@ header[data-testid="stHeader"] {background: transparent;}
 .st-key-cta .cta-teks {color: var(--muted); margin: 0 0 1.2rem 0;}
 
 /* ---------- Halaman deteksi ---------- */
-.judul-halaman {font-family: "Fraunces", Georgia, serif; font-size: 2.3rem; font-weight: 600; line-height: 1.15; margin: 0.2rem 0 0.3rem 0; letter-spacing: -0.01em;}
+.judul-halaman {font-size: 2.3rem; font-weight: 700; line-height: 1.15; margin: 0.2rem 0 0.3rem 0; letter-spacing: -0.01em;}
 .sub-halaman {color: var(--muted); font-size: 1rem; margin: 0 0 1rem 0;}
 .stepper {display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.4rem 0 1.4rem 0;}
 .step {display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.9rem 0.4rem 0.45rem; border-radius: 999px; background: var(--card); border: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; font-weight: 600;}
-.step i {font-style: normal; width: 1.45rem; height: 1.45rem; border-radius: 50%; display: grid; place-items: center; background: #EEE9DC; font-size: 0.75rem;}
+.step i {font-style: normal; width: 1.45rem; height: 1.45rem; border-radius: 50%; display: grid; place-items: center; background: #E4EBD2; font-size: 0.75rem;}
 .step.aktif {border-color: var(--green); background: var(--green-soft); color: var(--green-dark);}
 .step.aktif i, .step.selesai i {background: var(--green); color: #FFFFFF;}
 .step.selesai {color: var(--green-dark);}
@@ -169,27 +166,27 @@ header[data-testid="stHeader"] {background: transparent;}
 .judul-panel {font-weight: 700; font-size: 1.05rem; margin: 0 0 0.9rem 0; display: flex; align-items: center; gap: 0.55rem;}
 .judul-panel .bulat {width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--green); color: #FFF; display: grid; place-items: center; font-size: 0.78rem;}
 .st-key-panel-input [data-testid="stFileUploaderDropzone"] {
-    background: #F8F6EF; border: 1.5px dashed #B9B39F; border-radius: 16px; padding: 1.6rem 1rem;
+    background: #F4F8EC; border: 1.5px dashed #A9BC8E; border-radius: 16px; padding: 1.6rem 1rem;
 }
 .st-key-panel-input [data-testid="stFileUploaderDropzone"]:hover {border-color: var(--green);}
 .st-key-panel-input [data-testid="stImage"] img, .st-key-panel-cam [data-testid="stImage"] img {border-radius: 14px;}
-.st-key-panel-input [data-testid="stImage"] img {max-height: 300px; object-fit: contain; background: #F8F6EF;}
+.st-key-panel-input [data-testid="stImage"] img {max-height: 300px; object-fit: contain; background: #F4F8EC;}
 .info-berkas {display: flex; justify-content: space-between; gap: 0.6rem; font-size: 0.82rem; color: var(--muted); margin: 0.2rem 0 0.9rem 0;}
 
 .kosong {
-    border: 1.5px dashed #CFC9B6; border-radius: 18px; padding: 1.7rem 1.2rem;
+    border: 1.5px dashed #C9D4B2; border-radius: 18px; padding: 1.7rem 1.2rem;
     text-align: center; color: var(--muted); font-size: 0.95rem; line-height: 1.55;
 }
 .kosong svg {width: 44px; height: 44px; margin-bottom: 0.6rem; opacity: 0.85;}
 .kosong b {display: block; color: var(--ink); font-size: 1.02rem; margin-bottom: 0.2rem;}
 
 .hasil {border-radius: 18px; padding: 1.3rem 1.4rem;}
-.hasil-sehat {background: var(--green-soft); border: 1px solid #BFE2CB;}
-.hasil-sakit {background: var(--chili-soft); border: 1px solid #F5C2B7;}
+.hasil-sehat {background: var(--green-soft); border: 1px solid #BFE0AE;}
+.hasil-sakit {background: var(--rust-soft); border: 1px solid #EFC4A8;}
 .lencana {display: inline-block; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.28rem 0.75rem; border-radius: 999px; color: #FFF;}
 .hasil-sehat .lencana {background: var(--green);}
-.hasil-sakit .lencana {background: var(--chili);}
-.nama-hasil {font-family: "Fraunces", Georgia, serif; font-size: 2rem; font-weight: 600; margin: 0.7rem 0 0.1rem 0; line-height: 1.15;}
+.hasil-sakit .lencana {background: var(--rust);}
+.nama-hasil {font-size: 1.8rem; font-weight: 700; margin: 0.7rem 0 0.1rem 0; line-height: 1.15;}
 .keyakinan {font-size: 0.92rem; color: var(--muted);}
 .keyakinan b {color: var(--ink); font-size: 1.05rem;}
 .saran {margin: 0.9rem 0 0 0; font-size: 0.93rem; line-height: 1.55;}
@@ -200,8 +197,8 @@ header[data-testid="stHeader"] {background: transparent;}
 .bar-atas {display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600;}
 .track {height: 8px; background: rgba(255, 255, 255, 0.65); border-radius: 999px; overflow: hidden; margin-top: 0.35rem;}
 .isi-bar {height: 100%; border-radius: 999px;}
-.isi-sakit {background: var(--chili);}
-.isi-sehat {background: var(--ok);}
+.isi-sakit {background: var(--rust);}
+.isi-sehat {background: var(--green);}
 
 .st-key-panel-cam .teks-cam {font-size: 0.93rem; line-height: 1.6; color: var(--muted);}
 .legenda {height: 12px; border-radius: 999px; background: linear-gradient(90deg, #1D2BB8, #1FB6D6, #5BD16A, #F3E23B, #F58A1F, #D9261C); margin: 1rem 0 0.35rem 0;}
@@ -223,39 +220,42 @@ header[data-testid="stHeader"] {background: transparent;}
 # Ikon daun dengan bingkai pemindai, dipakai di hero dan merek.
 LOGO_SVG = """
 <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <rect width="32" height="32" rx="9" fill="#166A3E"/>
-  <path d="M16 6c6 2.6 8.6 9 0 20C7.400 15 10 8.600 16 6Z" fill="#C6F36B"/>
-  <path d="M16 9v16" stroke="#166A3E" stroke-width="1.4" stroke-linecap="round"/>
+  <rect width="32" height="32" rx="9" fill="#2E7D32"/>
+  <path d="M16 6c6 2.6 8.6 9 0 20C7.400 15 10 8.600 16 6Z" fill="#DCE9A8"/>
+  <path d="M16 9v16" stroke="#2E7D32" stroke-width="1.4" stroke-linecap="round"/>
 </svg>
 """
 
-DAUN_SVG = """
-<svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustrasi daun cabai dengan bingkai pemindai">
-  <circle cx="160" cy="160" r="140" fill="#FFFFFF" fill-opacity="0.05"/>
-  <path d="M160 36C246 76 280 172 160 288C40 172 74 76 160 36Z" fill="#2FA05F"/>
-  <path d="M160 36C246 76 280 172 160 288Z" fill="#1F8A4D"/>
-  <g stroke="#0E3B26" stroke-opacity="0.55" stroke-width="3" stroke-linecap="round" fill="none">
-    <path d="M160 50V286"/>
-    <path d="M160 100L118 78M160 100L202 78"/>
-    <path d="M160 146L100 118M160 146L220 118"/>
-    <path d="M160 192L108 160M160 192L212 160"/>
-    <path d="M160 236L128 206M160 236L192 206"/>
+# Cluster smiley rona daun, motif utama DESIGN.md, digambar sebagai
+# lingkaran datar dengan wajah garis sederhana.
+SMILEY_SVG = """
+<svg viewBox="0 0 260 190" width="100%" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="44" cy="40" r="26" fill="#F0D93B"/>
+  <circle cx="178" cy="66" r="40" fill="#9CCC65"/>
+  <circle cx="200" cy="132" r="34" fill="#B7C93E"/>
+  <circle cx="130" cy="148" r="30" fill="#66BB6A"/>
+  <circle cx="88" cy="92" r="52" fill="#43A047"/>
+  <g fill="#131A0E">
+    <circle cx="36" cy="36" r="3.4"/><circle cx="52" cy="36" r="3.4"/>
+    <circle cx="166" cy="60" r="4.4"/><circle cx="190" cy="60" r="4.4"/>
+    <circle cx="189" cy="127" r="3.8"/><circle cx="211" cy="127" r="3.8"/>
+    <circle cx="120" cy="144" r="3.4"/><circle cx="140" cy="144" r="3.4"/>
+    <circle cx="70" cy="84" r="5.6"/><circle cx="106" cy="84" r="5.6"/>
   </g>
-  <g fill="#7A3B14" fill-opacity="0.9">
-    <circle cx="124" cy="134" r="9"/><circle cx="206" cy="172" r="11"/>
-    <circle cx="140" cy="206" r="7"/><circle cx="188" cy="112" r="6"/>
-  </g>
-  <g stroke="#C6F36B" stroke-width="5" stroke-linecap="round" fill="none">
-    <path d="M52 92V58H86"/><path d="M268 92V58H234"/>
-    <path d="M52 228V262H86"/><path d="M268 228V262H234"/>
+  <g fill="none" stroke="#131A0E" stroke-linecap="round">
+    <path d="M36,46 Q44,53 52,46" stroke-width="3"/>
+    <path d="M165,72 Q178,83 191,72" stroke-width="3.6"/>
+    <path d="M189,137 Q200,145 211,137" stroke-width="3.2"/>
+    <path d="M120,154 Q130,161 140,154" stroke-width="3"/>
+    <path d="M69,98 Q88,114 107,98" stroke-width="4.6"/>
   </g>
 </svg>
 """
 
 IKON_KOSONG_SVG = """
 <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <path d="M32 8c14 6 20 20 0 46C12 28 18 14 32 8Z" fill="#E8F5EC" stroke="#166A3E" stroke-width="2.5" stroke-linejoin="round"/>
-  <path d="M32 14v38" stroke="#166A3E" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M32 8c14 6 20 20 0 46C12 28 18 14 32 8Z" fill="#E7F3DE" stroke="#2E7D32" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M32 14v38" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round"/>
 </svg>
 """
 
@@ -575,10 +575,12 @@ def tampilkan_welcome(st):
         with kiri:
             st.markdown(
                 """
-                <div class="eyebrow">MobileNetV3-Small + Coordinate Attention</div>
-                <h1>Deteksi bercak daun bakteri, <em>cukup dari satu foto.</em></h1>
-                <p class="hero-sub">Unggah foto sehelai daun cabai. Aplikasi memprediksi
-                apakah daun sehat atau terinfeksi bacterial spot, lengkap dengan
+                <div class="eyebrow">Aplikasi Kerja Praktek \u00b7 ITB STIKOM Bali</div>
+                <h1>Deteksi Bercak Daun Bakteri pada Daun Cabai</h1>
+                <p class="naskah">Cukup dari satu foto daun.</p>
+                <p class="hero-sub">Aplikasi ini memprediksi apakah sehelai daun cabai
+                sehat atau terinfeksi bacterial spot dari sebuah foto, memakai model
+                MobileNetV3-Small dengan Coordinate Attention, lengkap dengan
                 peta Grad-CAM yang menunjukkan dasar keputusannya.</p>
                 """,
                 unsafe_allow_html=True,
@@ -587,7 +589,7 @@ def tampilkan_welcome(st):
                 st.session_state.mulai = True
                 st.rerun()
         with kanan:
-            st.markdown(f'<div class="hero-art">{DAUN_SVG}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="kartu-gradien">{SMILEY_SVG}</div>', unsafe_allow_html=True)
 
     st.markdown(
         '<div class="stat-grid">'
@@ -623,7 +625,7 @@ def tampilkan_welcome(st):
 
     st.markdown(
         '<div class="bab-label">Panduan</div>'
-        '<h2 class="judul-bab">Cara penggunaan</h2>' + html_langkah(),
+        '<h2 class="judul-bab">Cara <span class="naskah-inline">penggunaan</span></h2>' + html_langkah(),
         unsafe_allow_html=True,
     )
 
