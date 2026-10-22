@@ -64,7 +64,7 @@ GAYA = """
 :root {
     --ink: #11150C;
     --muted: #5F7161;
-    --paper: #EDF3E2;
+    --paper: ##EBE8E4;
     --card: #FFFFFF;
     --line: #D9E3C6;
     --green: #2E7D32;
