@@ -32,6 +32,9 @@ CLASS_NAMES = ["healthy", "bacterial_spot"]
 # Di bawah ambang ini model dianggap tidak yakin pada jawabannya.
 AMBANG_KEYAKINAN = 0.70
 
+# Tautan aplikasi, dicetak sebagai kode QR pada hasil PDF.
+URL_APLIKASI = "https://chili-leaf-detection-stikombali.streamlit.app/"
+
 INFO = {
     "healthy": {
         "judul": "Daun Sehat",
@@ -185,8 +188,21 @@ def gradcam_overlay(model, image, device, class_idx):
     return Image.blend(asli, panas, alpha=0.45)
 
 
-def buat_pdf(gambar, overlay, pred, probs):
-    """Susun laporan hasil deteksi satu halaman. Kembalikan isi PDF sebagai bytes."""
+def buat_qr(url):
+    """Buat gambar kode QR berisi url, dikembalikan sebagai bytes PNG."""
+    import qrcode
+
+    qr = qrcode.QRCode(box_size=10, border=1)
+    qr.add_data(url)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
+    buf = io.BytesIO()
+    img.save(buf, format="PNG")
+    return buf.getvalue()
+
+
+def buat_pdf(gambar, overlay, pred, probs, nama_file):
+    """Susun laporan hasil deteksi. Kembalikan isi PDF sebagai bytes."""
     from fpdf import FPDF
 
     info = INFO[pred]
@@ -201,6 +217,8 @@ def buat_pdf(gambar, overlay, pred, probs):
     pdf.cell(0, 6, "Model MobileNetV3-Small + Coordinate Attention",
              new_x="LMARGIN", new_y="NEXT", align="C")
     pdf.cell(0, 6, f"Tanggal pengujian: {tanggal_hari_ini()}",
+             new_x="LMARGIN", new_y="NEXT", align="C")
+    pdf.cell(0, 6, f"Nama file: {nama_file}",
              new_x="LMARGIN", new_y="NEXT", align="C")
     pdf.ln(4)
 
@@ -227,9 +245,11 @@ def buat_pdf(gambar, overlay, pred, probs):
 
     pdf.set_font("helvetica", "", 9)
     pdf.set_text_color(100, 100, 100)
-    pdf.cell(0, 5, "Kiri: foto yang diunggah. Kanan: peta Grad-CAM, warna merah "
-                   "menandakan bagian yang paling berpengaruh pada prediksi.",
-             new_x="LMARGIN", new_y="NEXT", align="C")
+    pdf.multi_cell(0, 5, "Kiri: foto yang diunggah. Kanan: peta Grad-CAM, warna merah "
+                         "menandakan bagian yang paling berpengaruh pada prediksi. "
+                         "Peta ini menunjukkan bagian citra yang menjadi fokus model, "
+                         "bukan batas pasti bercak penyakit.",
+                   align="C")
     pdf.set_text_color(0, 0, 0)
     pdf.ln(4)
 
@@ -252,6 +272,46 @@ def buat_pdf(gambar, overlay, pred, probs):
             "belum bisa dipegang. Ambil ulang foto satu helai daun dengan "
             "background polos dan pencahayaan yang cukup.",
         )
+
+    pdf.ln(4)
+    pdf.set_font("helvetica", "B", 13)
+    pdf.cell(0, 8, "Tentang Model", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_font("helvetica", "", 11)
+    pdf.multi_cell(
+        0, 6,
+        "Model yang dipakai adalah MobileNetV3-Small dengan Coordinate "
+        "Attention, dilatih pada dataset PlantVillage sebanyak 2.475 "
+        "citra dari dua kelas, yaitu bacterial spot dan sehat. Pada data "
+        "uji, model mencapai akurasi 99,73%.",
+    )
+    pdf.ln(2)
+    pdf.set_font("helvetica", "B", 13)
+    pdf.cell(0, 8, "Catatan", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_font("helvetica", "", 11)
+    pdf.multi_cell(
+        0, 6,
+        "Hasil pada dokumen ini adalah prediksi model dan bukan "
+        "diagnosis pasti. Model hanya membedakan dua kelas, yaitu sehat "
+        "dan bacterial spot, sehingga penyakit atau kerusakan lain di "
+        "luar dua kelas tersebut dapat terprediksi sebagai salah "
+        "satunya. Gunakan hasil ini sebagai bahan pertimbangan awal "
+        "dan konsultasikan dengan penyuluh pertanian untuk kepastian.",
+    )
+
+    # Kode QR berisi tautan aplikasi, ditaruh di kanan bawah isi dokumen.
+    y_qr = pdf.get_y() + 6
+    if y_qr + 34 > 282:
+        pdf.add_page()
+        y_qr = pdf.get_y()
+    with tempfile.TemporaryDirectory() as tmp:
+        path_qr = Path(tmp) / "qr.png"
+        path_qr.write_bytes(buat_qr(URL_APLIKASI))
+        pdf.image(str(path_qr), x=168, y=y_qr, w=28)
+    pdf.set_xy(154, y_qr + 29)
+    pdf.set_font("helvetica", "", 8)
+    pdf.set_text_color(100, 100, 100)
+    pdf.cell(56, 5, "Pindai untuk membuka aplikasi", align="C")
+    pdf.set_text_color(0, 0, 0)
 
     pdf.set_y(-22)
     pdf.set_font("helvetica", "I", 9)
@@ -306,7 +366,7 @@ def tampilkan_welcome(st):
         tampilkan_tutorial(st)
 
     st.caption(
-        "Made Ranggadeva Ratryananda Sandhi · Kerja Praktek ITB STIKOM Bali"
+        "Kerja Praktek ITB STIKOM Bali · Akurasi model pada data uji 99,73%"
     )
 
 
@@ -377,7 +437,11 @@ def main():
                     overlay = gradcam_overlay(
                         model, gambar, device, CLASS_NAMES.index(pred)
                     )
-                    pdf_bytes = buat_pdf(gambar, overlay, pred, probs)
+                    nama_file = (
+                        berkas.name if sumber == "Upload file"
+                        else "Foto dari kamera"
+                    )
+                    pdf_bytes = buat_pdf(gambar, overlay, pred, probs, nama_file)
                 buf = io.BytesIO()
                 overlay.save(buf, format="PNG")
                 st.session_state.hasil = {

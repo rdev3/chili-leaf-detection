@@ -16,3 +16,5 @@ matplotlib
 tqdm
 # Penyusun laporan hasil deteksi PDF di aplikasi.
 fpdf2
+# Kode QR berisi tautan aplikasi pada hasil PDF.
+qrcode
