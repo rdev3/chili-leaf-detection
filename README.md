@@ -128,6 +128,7 @@ Memakai checkpoint CA terbaik
 - v18: kartu fitur di layar pembuka ditata ulang: ikon dalam lencana lingkaran, hierarki judul dan deskripsi diperjelas
 - v19: audit komentar antislop-code (logika tidak berubah, terverifikasi AST) dan redesign UI mengikuti DESIGN.md: tema terang terkunci via .streamlit/config.toml, tombol aksi pill biru, kartu fitur tanpa emoji
 - v20: kartu fitur dibuat seragam (tiga kolom sama lebar) dan lebih menonjol: isian #F9F9F9, bingkai #E7E7E7, bayangan tipis
+- v21: kartu fitur dipindah ke satu grid CSS supaya lebar dan tinggi ketiganya sama persis; di layar sempit grid menumpuk
 
 ## Troubleshooting
 

@@ -64,6 +64,8 @@ h1 {letter-spacing: -0.035em;}
 .hero {text-align: center; padding: 2rem 1rem 0.5rem 1rem;}
 .hero h1 {font-size: 3rem; font-weight: 500; line-height: 1.05;}
 .hero p {color: #757575; max-width: 620px; margin: 0 auto;}
+.grid-fitur {display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;}
+@media (max-width: 640px) {.grid-fitur {grid-template-columns: 1fr;}}
 .fitur {
     background: #F9F9F9; border: 1px solid #E7E7E7; border-radius: 16px;
     padding: 1.25rem 1.1rem; height: 100%; color: #000000;
@@ -278,7 +280,6 @@ def tampilkan_welcome(st):
         unsafe_allow_html=True,
     )
 
-    kol = st.columns(3)
     fitur = [
         ("Deteksi dari Foto",
          "Unggah foto daun atau ambil dari kamera. Hasilnya label sehat "
@@ -286,13 +287,12 @@ def tampilkan_welcome(st):
         ("Peta Grad-CAM", "Lihat bagian daun yang menjadi dasar prediksi"),
         ("Unduh Hasil PDF", "Simpan hasil deteksi sebagai dokumen laporan"),
     ]
-    for kolom, (judul, isi) in zip(kol, fitur):
-        with kolom:
-            st.markdown(
-                f'<div class="fitur"><div class="judul-fitur">{judul}</div>'
-                f"<small>{isi}</small></div>",
-                unsafe_allow_html=True,
-            )
+    kartu = "".join(
+        f'<div class="fitur"><div class="judul-fitur">{judul}</div>'
+        f"<small>{isi}</small></div>"
+        for judul, isi in fitur
+    )
+    st.markdown(f'<div class="grid-fitur">{kartu}</div>', unsafe_allow_html=True)
 
     st.write("")
     tengah = st.columns([1, 2, 1])[1]
