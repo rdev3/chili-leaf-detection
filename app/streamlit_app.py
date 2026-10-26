@@ -15,6 +15,7 @@ import io
 import json
 import sys
 import tempfile
+import time
 import urllib.error
 import urllib.request
 from datetime import datetime
@@ -392,39 +393,58 @@ def minta_penjelasan_gemini(api_key, model, pred):
         },
         method="POST",
     )
-    try:
-        with urllib.request.urlopen(permintaan, timeout=30) as jawaban:
-            data = json.loads(jawaban.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        pesan = ""
+    # Gangguan jaringan sesaat (timeout, koneksi putus) dicoba ulang sekali
+    # otomatis; galat HTTP seperti kunci salah atau kuota habis tidak
+    # diulang karena mengulanginya tidak mengubah hasil.
+    data = None
+    for percobaan in range(2):
         try:
-            data_galat = json.loads(e.read().decode("utf-8"))
-            pesan = data_galat.get("error", {}).get("message", "")
-        except Exception:
+            with urllib.request.urlopen(permintaan, timeout=60) as jawaban:
+                data = json.loads(jawaban.read().decode("utf-8"))
+            break
+        except urllib.error.HTTPError as e:
             pesan = ""
-        if e.code == 404:
-            return "", (
-                "Model Gemini tidak ditemukan. ID model Flash yang aktif "
-                "kemungkinan sudah berubah; ubah GEMINI_MODEL di secrets "
-                "ke ID yang aktif."
-                + (f" Detail: {pesan}" if pesan else "")
+            try:
+                data_galat = json.loads(e.read().decode("utf-8"))
+                pesan = data_galat.get("error", {}).get("message", "")
+            except Exception:
+                pesan = ""
+            if e.code == 404:
+                return "", (
+                    "Model Gemini tidak ditemukan. ID model Flash yang aktif "
+                    "kemungkinan sudah berubah; ubah GEMINI_MODEL di secrets "
+                    "ke ID yang aktif."
+                    + (f" Detail: {pesan}" if pesan else "")
+                )
+            if e.code == 429:
+                return "", (
+                    "Kuota gratis Gemini habis untuk hari ini. "
+                    "Coba lagi besok atau periksa kuota di Google AI Studio."
+                    + (f" Detail: {pesan}" if pesan else "")
+                )
+            return "", f"Gemini mengembalikan status {e.code}." + (
+                f" Detail: {pesan}" if pesan else ""
             )
-        if e.code == 429:
+        except TimeoutError:
+            if percobaan == 0:
+                time.sleep(2)
+                continue
             return "", (
-                "Kuota gratis Gemini habis untuk hari ini. "
-                "Coba lagi besok atau periksa kuota di Google AI Studio."
-                + (f" Detail: {pesan}" if pesan else "")
+                "Gemini terlalu lama merespons. Kemungkinan koneksi lambat "
+                "atau server sibuk. Silakan klik tombol Tanya AI lagi."
             )
-        return "", f"Gemini mengembalikan status {e.code}." + (
-            f" Detail: {pesan}" if pesan else ""
-        )
-    except urllib.error.URLError:
-        return "", (
-            "Tidak dapat terhubung ke Gemini. Periksa koneksi internet "
-            "lalu coba lagi."
-        )
-    except Exception as e:
-        return "", f"Gagal meminta penjelasan dari Gemini: {e}"
+        except urllib.error.URLError:
+            if percobaan == 0:
+                time.sleep(2)
+                continue
+            return "", (
+                "Tidak dapat terhubung ke Gemini. Periksa koneksi internet "
+                "lalu coba lagi."
+            )
+        except Exception as e:
+            return "", f"Gagal meminta penjelasan dari Gemini: {e}"
+    if data is None:
+        return "", "Gagal meminta penjelasan dari Gemini."
     try:
         teks = data["candidates"][0]["content"]["parts"][0]["text"].strip()
     except (KeyError, IndexError, TypeError):
