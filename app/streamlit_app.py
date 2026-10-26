@@ -70,7 +70,7 @@ GAYA = """
 :root {
     --ink: #11150C;
     --muted: #5F7161;
-    --paper: #EDF3E2;
+    --paper: #EBE8E4;
     --card: #FFFFFF;
     --line: #D9E3C6;
     --green: #2E7D32;
@@ -585,7 +585,7 @@ def tampilkan_tutorial(st):
 
 
 def html_bilah_atas(dengan_tag=True):
-    tag = '<div class="tag">Kerja Praktek · ITB STIKOM Bali</div>' if dengan_tag else ""
+    tag = '<div class="tag">Made Ranggadeva Ratryananda Sandhi · ITB STIKOM Bali</div>' if dengan_tag else ""
     return (
         f'<div class="topbar"><div class="merek">{LOGO_SVG}'
         f"<span>Deteksi Daun Cabai</span></div>{tag}</div>"
