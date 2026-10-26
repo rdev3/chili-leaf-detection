@@ -258,7 +258,7 @@ DAUN_SVG = """
 """
 LANGKAH_TUTORIAL = [
     "Siapkan foto satu helai daun cabai dengan background polos dan pencahayaan yang cukup.",
-    "Pilih sumber gambar, unggah file foto atau ambil langsung dari kamera.",
+    "Unggah file foto daun yang akan diperiksa.",
     "Klik tombol Deteksi dan tunggu sampai hasil tampil.",
     "Baca hasilnya: label sehat atau bacterial spot, tingkat keyakinan model, "
     "dan peta Grad-CAM yang menunjukkan bagian daun yang paling diperhatikan model.",
@@ -393,9 +393,10 @@ def minta_penjelasan_gemini(api_key, model, pred):
         },
         method="POST",
     )
-    # Gangguan jaringan sesaat (timeout, koneksi putus) dicoba ulang sekali
-    # otomatis; galat HTTP seperti kunci salah atau kuota habis tidak
-    # diulang karena mengulanginya tidak mengubah hasil.
+    # Gangguan jaringan sesaat (timeout, koneksi putus) dan galat server
+    # sementara (500, 503) dicoba ulang sekali otomatis; galat lain seperti
+    # kunci salah atau kuota habis tidak diulang karena mengulanginya
+    # tidak mengubah hasil.
     data = None
     for percobaan in range(2):
         try:
@@ -409,6 +410,17 @@ def minta_penjelasan_gemini(api_key, model, pred):
                 pesan = data_galat.get("error", {}).get("message", "")
             except Exception:
                 pesan = ""
+            if e.code in (500, 503) and percobaan == 0:
+                # Galat server bersifat sementara (server penuh), jadi
+                # dicoba ulang sekali setelah jeda.
+                time.sleep(5)
+                continue
+            if e.code == 503:
+                return "", (
+                    "Server Gemini sedang penuh. Ini biasanya sementara; "
+                    "silakan klik tombol Tanya AI lagi beberapa saat."
+                    + (f" Detail: {pesan}" if pesan else "")
+                )
             if e.code == 404:
                 return "", (
                     "Model Gemini tidak ditemukan. ID model Flash yang aktif "
@@ -605,7 +617,7 @@ def tampilkan_tutorial(st):
 
 
 def html_bilah_atas(dengan_tag=True):
-    tag = '<div class="tag">Made Ranggadeva Ratryananda Sandhi · ITB STIKOM Bali</div>' if dengan_tag else ""
+    tag = '<div class="tag">Kerja Praktek · ITB STIKOM Bali</div>' if dengan_tag else ""
     return (
         f'<div class="topbar"><div class="merek">{LOGO_SVG}'
         f"<span>Deteksi Daun Cabai</span></div>{tag}</div>"
@@ -695,7 +707,7 @@ def tampilkan_welcome(st):
 
     fitur = [
         ("01", "Deteksi dari foto",
-         "Unggah foto daun atau ambil dari kamera. Hasilnya label sehat "
+         "Unggah foto daun. Hasilnya label sehat "
          "atau bacterial spot beserta tingkat keyakinan model."),
         ("02", "Peta Grad-CAM",
          "Lihat bagian daun yang menjadi dasar prediksi model, ditandai "
@@ -800,34 +812,18 @@ def main():
                 '<div class="judul-panel"><span class="bulat">1</span>Foto daun</div>',
                 unsafe_allow_html=True,
             )
-            pilihan = ["Upload file", "Kamera"]
-            if hasattr(st, "segmented_control"):
-                sumber = st.segmented_control(
-                    "Sumber gambar", pilihan, default=pilihan[0],
-                    label_visibility="collapsed",
-                ) or pilihan[0]
-            else:
-                sumber = st.radio("Sumber gambar", pilihan, horizontal=True)
-            if sumber == "Upload file":
-                berkas = st.file_uploader(
-                    "Pilih foto daun", type=["jpg", "jpeg", "png"],
-                    label_visibility="collapsed",
-                )
-                if berkas is not None:
-                    gambar_bytes = berkas.getvalue()
-                    gambar = Image.open(io.BytesIO(gambar_bytes))
-            else:
-                foto = st.camera_input("Ambil foto daun", label_visibility="collapsed")
-                if foto is not None:
-                    gambar_bytes = foto.getvalue()
-                    gambar = Image.open(io.BytesIO(gambar_bytes))
+            berkas = st.file_uploader(
+                "Pilih foto daun", type=["jpg", "jpeg", "png"],
+                label_visibility="collapsed",
+            )
+            if berkas is not None:
+                gambar_bytes = berkas.getvalue()
+                gambar = Image.open(io.BytesIO(gambar_bytes))
 
             if gambar is not None:
-                if sumber == "Upload file":
-                    st.image(gambar, width="stretch")
-                nama_tampil = berkas.name if sumber == "Upload file" else "Foto dari kamera"
+                st.image(gambar, width="stretch")
                 st.markdown(
-                    f'<div class="info-berkas"><span>{nama_tampil}</span>'
+                    f'<div class="info-berkas"><span>{berkas.name}</span>'
                     f"<span>{gambar.width} × {gambar.height} px</span></div>",
                     unsafe_allow_html=True,
                 )
@@ -837,10 +833,7 @@ def main():
                         overlay = gradcam_overlay(
                             model, gambar, device, CLASS_NAMES.index(pred)
                         )
-                        nama_file = (
-                            berkas.name if sumber == "Upload file"
-                            else "Foto dari kamera"
-                        )
+                        nama_file = berkas.name
                         pdf_bytes = buat_pdf(gambar, overlay, pred, probs, nama_file)
                     buf = io.BytesIO()
                     overlay.save(buf, format="PNG")

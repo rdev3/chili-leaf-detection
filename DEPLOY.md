@@ -58,6 +58,28 @@ GitHub tidak menerima password biasa — pakai Personal Access Token
    Instalasi pertama makan waktu beberapa menit
    (torch CPU ~200 MB). Setelah jadi, dapat URL publik.
 
+## Mengaktifkan fitur Tanya AI (opsional)
+
+Fitur ini meminta penjelasan umum dari Gemini berdasarkan label prediksi
+model saja; foto tidak dikirim. Tanpa kunci, aplikasi tetap jalan normal
+dan bagian Tanya AI hanya menampilkan pesan belum dikonfigurasi.
+
+1. Buat kunci di Google AI Studio → Get API key.
+2. Di Streamlit Cloud: buka aplikasi → Manage app → Settings → Secrets,
+   lalu tambahkan:
+   ```
+   GEMINI_API_KEY = "kunci-dari-AI-Studio"
+   ```
+   Baris `GEMINI_MODEL` opsional dan boleh tidak diisi: kode memakai
+   default `gemini-3.8-flash` (Flash stabil untuk proyek baru, dicek
+   26 Okt 2026). Kalau pemanggilan mengembalikan 404 di masa depan,
+   tambahkan baris `GEMINI_MODEL = "id-model-flash-yang-aktif"` dengan
+   ID yang aktif saat itu, karena ID model berubah dari waktu ke waktu.
+3. Untuk uji lokal, buat file `.streamlit/secrets.toml` dengan isi yang
+   sama. Berkas ini sudah masuk `.gitignore`, jadi tidak ikut ter-commit.
+4. Jangan pernah menulis kunci di kode, di file `.env` yang ikut
+   ter-commit, atau mengirimnya lewat chat.
+
 ## Catatan
 
 - Repo publik berarti kode dan model bisa dilihat siapa pun.

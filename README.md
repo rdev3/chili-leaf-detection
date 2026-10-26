@@ -139,6 +139,7 @@ Memakai checkpoint CA terbaik
 - v29: UI di-rework ke bahasa Designjoy dengan palet daun: hero hitam berisi kartu gradien hijau dengan cluster smiley rona daun, subjudul serif italic, kartu fitur dotted, halaman kertas hijau pucat, CTA hijau daun teks hitam, sisi sakit rona karat; struktur dan perbaikan proporsi v28 dipertahankan
 - v30: masukan user dari screenshot: cluster smiley diganti lagi dengan ilustrasi daun berbingkai pemindai (proporsi dikunci lebar maksimal 260px), ikon daun di kotak "Belum ada hasil" dihapus
 - v31: grid langkah tutorial diganti aliran kolom CSS (1-3 kiri, 4-6 kanan) supaya tinggi tiap langkah tidak dikunci baris tetangganya dan ruang kosong antarlangkah hilang
+- v32: fitur kamera dihapus sesuai catatan bimbingan 26 Okt: pemilih sumber gambar, cabang camera_input, dan nama "Foto dari kamera" dihapus; teks tutorial dan kartu fitur disesuaikan; hanya jalur upload yang tersisa
 
 ## Troubleshooting
 

@@ -6,3 +6,5 @@ outputs/
 *.pth
 *.onnx
 *.tflite
+# Kunci API (mis. Gemini) tidak boleh ikut ter-commit.
+.streamlit/secrets.toml
