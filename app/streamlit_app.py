@@ -3,14 +3,20 @@
 Memakai model MobileNetV3-Small + Coordinate Attention terbaik
 dari hasil training. Dilengkapi layar pembuka, panduan penggunaan,
 visualisasi Grad-CAM, dan unduh hasil deteksi sebagai PDF.
+Fitur opsional Tanya AI meminta penjelasan umum dari Gemini
+berdasarkan label prediksi model saja; foto tidak pernah dikirim,
+dan kunci API dibaca dari Streamlit secrets.
 
 Jalankan dari root proyek:
     streamlit run app/streamlit_app.py
 """
 
 import io
+import json
 import sys
 import tempfile
+import urllib.error
+import urllib.request
 from datetime import datetime
 from pathlib import Path
 
@@ -64,7 +70,7 @@ GAYA = """
 :root {
     --ink: #11150C;
     --muted: #5F7161;
-    --paper: ##EBE8E4;
+    --paper: #EDF3E2;
     --card: #FFFFFF;
     --line: #D9E3C6;
     --green: #2E7D32;
@@ -351,6 +357,83 @@ def gradcam_overlay(model, image, device, class_idx):
     return Image.blend(asli, panas, alpha=0.45)
 
 
+def minta_penjelasan_gemini(api_key, model, pred):
+    """Minta penjelasan umum dari Gemini berdasarkan label prediksi saja.
+
+    Hanya teks label yang dikirim, foto tidak pernah dikirim. Mengembalikan
+    pasangan (teks, galat): salah satunya kosong. Fungsi ini tidak memakai
+    Streamlit sehingga bisa dites tanpa menjalankan aplikasi.
+    """
+    if pred == "healthy":
+        prompt = (
+            "Jelaskan secara umum cara merawat daun cabai yang sehat dan "
+            "tanda-tanda awal penyakit yang perlu diwaspadai. Jangan "
+            "menyebutkan nama pestisida, bahan kimia, atau dosis. Jawab "
+            "dalam Bahasa Indonesia, maksimal 150 kata."
+        )
+    else:
+        prompt = (
+            "Jelaskan secara umum penyakit bacterial spot pada tanaman "
+            "cabai: gejala umum dan langkah penanganan umum. Jangan "
+            "menyebutkan nama pestisida, bahan kimia, atau dosis. Jawab "
+            "dalam Bahasa Indonesia, maksimal 150 kata."
+        )
+    tubuh = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {"temperature": 0.3, "maxOutputTokens": 300},
+    }
+    permintaan = urllib.request.Request(
+        "https://generativelanguage.googleapis.com/v1beta/models/"
+        f"{model}:generateContent",
+        data=json.dumps(tubuh).encode("utf-8"),
+        headers={
+            "Content-Type": "application/json",
+            "x-goog-api-key": api_key,
+        },
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(permintaan, timeout=30) as jawaban:
+            data = json.loads(jawaban.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        pesan = ""
+        try:
+            data_galat = json.loads(e.read().decode("utf-8"))
+            pesan = data_galat.get("error", {}).get("message", "")
+        except Exception:
+            pesan = ""
+        if e.code == 404:
+            return "", (
+                "Model Gemini tidak ditemukan. ID model Flash yang aktif "
+                "kemungkinan sudah berubah; ubah GEMINI_MODEL di secrets "
+                "ke ID yang aktif."
+                + (f" Detail: {pesan}" if pesan else "")
+            )
+        if e.code == 429:
+            return "", (
+                "Kuota gratis Gemini habis untuk hari ini. "
+                "Coba lagi besok atau periksa kuota di Google AI Studio."
+                + (f" Detail: {pesan}" if pesan else "")
+            )
+        return "", f"Gemini mengembalikan status {e.code}." + (
+            f" Detail: {pesan}" if pesan else ""
+        )
+    except urllib.error.URLError:
+        return "", (
+            "Tidak dapat terhubung ke Gemini. Periksa koneksi internet "
+            "lalu coba lagi."
+        )
+    except Exception as e:
+        return "", f"Gagal meminta penjelasan dari Gemini: {e}"
+    try:
+        teks = data["candidates"][0]["content"]["parts"][0]["text"].strip()
+    except (KeyError, IndexError, TypeError):
+        return "", "Jawaban Gemini tidak dapat dibaca."
+    if not teks:
+        return "", "Gemini mengembalikan jawaban kosong."
+    return teks, ""
+
+
 def buat_qr(url):
     """Buat gambar kode QR berisi url, dikembalikan sebagai bytes PNG."""
     import qrcode
@@ -502,7 +585,7 @@ def tampilkan_tutorial(st):
 
 
 def html_bilah_atas(dengan_tag=True):
-    tag = '<div class="tag">Made Ranggadeva Ratyrananda Sandhi · ITB STIKOM Bali</div>' if dengan_tag else ""
+    tag = '<div class="tag">Kerja Praktek · ITB STIKOM Bali</div>' if dengan_tag else ""
     return (
         f'<div class="topbar"><div class="merek">{LOGO_SVG}'
         f"<span>Deteksi Daun Cabai</span></div>{tag}</div>"
@@ -808,6 +891,57 @@ def main():
                 mime="application/pdf",
                 width="stretch",
             )
+
+            # Fitur opsional: penjelasan umum dari Gemini berdasarkan label
+            # prediksi saja. Foto tidak dikirim, hanya teks label. Kunci
+            # dibaca dari Streamlit secrets, tidak pernah ditulis di kode.
+            st.markdown("---")
+            st.markdown("**Tanya AI (opsional)**")
+            st.markdown(
+                "Penjelasan di bawah ini dibuat Gemini berdasarkan label "
+                "prediksi model, bukan diagnosis baru. Foto tidak dikirim "
+                "ke Gemini, hanya labelnya."
+            )
+            try:
+                kunci_gemini = st.secrets["GEMINI_API_KEY"]
+            except Exception:
+                kunci_gemini = None
+            try:
+                model_gemini = st.secrets["GEMINI_MODEL"]
+            except Exception:
+                # Default dicek 26 Okt 2026: gemini-3.8-flash adalah Flash
+                # stabil untuk proyek baru. ID model berubah dari waktu ke
+                # waktu; kalau pemanggilan mengembalikan 404, ganti ID-nya.
+                model_gemini = "gemini-3.8-flash"
+            if not kunci_gemini:
+                st.info(
+                    "Fitur ini belum dikonfigurasi. Tambahkan GEMINI_API_KEY "
+                    "di Streamlit secrets untuk mengaktifkannya."
+                )
+            else:
+                if st.button("Tanya AI tentang hasil ini", width="stretch"):
+                    with st.spinner("Meminta penjelasan dari Gemini..."):
+                        teks_ai, galat_ai = minta_penjelasan_gemini(
+                            kunci_gemini, model_gemini, hasil["pred"]
+                        )
+                    st.session_state.penjelasan_ai = {
+                        "gambar_id": hasil["gambar_id"],
+                        "teks": teks_ai,
+                        "galat": galat_ai,
+                    }
+                penjelasan = st.session_state.get("penjelasan_ai")
+                if penjelasan and penjelasan["gambar_id"] == hasil["gambar_id"]:
+                    if penjelasan["galat"]:
+                        st.warning(penjelasan["galat"])
+                    else:
+                        st.markdown(penjelasan["teks"])
+                        st.markdown(
+                            '<p class="teks-cam">Penjelasan ini dihasilkan '
+                            "Gemini berdasarkan label prediksi model, bukan "
+                            "diagnosis baru. Model lokal yang memutuskan "
+                            "label.</p>",
+                            unsafe_allow_html=True,
+                        )
 
     tahap = 3 if hasil_valid else (2 if gambar is not None else 1)
     tempat_stepper.markdown(html_stepper(tahap), unsafe_allow_html=True)
